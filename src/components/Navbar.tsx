@@ -1,29 +1,36 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
+
+const navigation = [
+  { title: "Customers", path: "/" },
+  { title: "Careers", path: "/" },
+  { title: "Guides", path: "/" },
+  { title: "Partners", path: "/" },
+];
+
+const navigationItems = navigation.map((item, idx) => (
+  <li key={idx} className="text-gray-600 hover:text-indigo-600">
+    <Link href={item.path}>{item.title}</Link>
+  </li>
+));
 
 export const Navbar = () => {
   const [state, setState] = useState(false);
-
-  const navigation = [
-    { title: "Customers", path: "/" },
-    { title: "Careers", path: "/" },
-    { title: "Guides", path: "/" },
-    { title: "Partners", path: "/" },
-  ];
 
   return (
     <nav className="w-full border-b md:border-0 md:static">
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
-          <a href="/">
+          <Link href="/">
             <img
               src="https://www.floatui.com/logo.svg"
               width={120}
               height={50}
               alt="Float UI logo"
             />
-          </a>
+          </Link>
           <div className="md:hidden">
             <button
               className="text-gray-700 outline-none p-2 rounded-md focus:border-gray-400 focus:border"
@@ -67,13 +74,7 @@ export const Navbar = () => {
           }`}
         >
           <ul className="justify-center items-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-            {navigation.map((item, idx) => {
-              return (
-                <li key={idx} className="text-gray-600 hover:text-indigo-600">
-                  <a href={item.path}>{item.title}</a>
-                </li>
-              );
-            })}
+            {navigationItems}
           </ul>
         </div>
         <div className="hidden md:inline-block">

@@ -1,21 +1,25 @@
 "use client";
-import { useAuthActions } from "@/context/AuthContext";
-import { useRouter } from "next/router";
+import { useAuth, useAuthActions } from "@/context/AuthContext";
 import React, { useEffect, useState } from "react";
 import Input from "../Input";
 import { Button } from "../Button";
+import { useRouter } from "next/navigation";
 
 export const LoginWithMail = () => {
+  const router = useRouter();
   const { signIn } = useAuthActions();
+
   const [data, setData] = useState({
-    email: "",
-    password: "",
+    email: "" as string,
+    password: "" as string,
   });
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
     try {
-      await signIn(data.email, data.password);
+      await signIn(data.email, data.password).then(() => {
+        router.push("/");
+      });
     } catch (err) {
       console.log(err);
     }
@@ -30,7 +34,7 @@ export const LoginWithMail = () => {
             className="w-full"
             type="email"
             required
-            onChange={(e: any) =>
+            onChange={(e) =>
               setData({
                 ...data,
                 email: e.target.value,
@@ -44,7 +48,7 @@ export const LoginWithMail = () => {
             className="w-full"
             type="password"
             required
-            onChange={(e: any) =>
+            onChange={(e) =>
               setData({
                 ...data,
                 password: e.target.value,

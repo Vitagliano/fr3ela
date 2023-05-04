@@ -3,8 +3,13 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Link from "next/link";
 import { Button } from "@/components/Button";
 import Input from "@/components/Input";
+import { useAuth, useAuthActions } from "@/context/AuthContext";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
+  const { user } = useAuth();
+  const { signOut } = useAuthActions();
+
   return (
     <main className="flex min-h-screen items-center flex-col justify-center gap-8 p-24">
       <div className="flex items-center justify-center gap-8 ">
@@ -13,24 +18,8 @@ export default function Home() {
         <Link href="/signin">Sign In</Link>
         <Link href="/signup">Sign Up</Link>
       </div>
-
-      <Input
-        type="text"
-        placeholder="Input"
-        onChange={(e) => {
-          console.log({ e });
-        }}
-      />
-      <Input type="password" required placeholder="Senha" />
-      <Input type="email" required placeholder="Email" />
-      <Button
-        type="submit"
-        onClick={() => {
-          console.log("clicou");
-        }}
-      >
-        Button
-      </Button>
+      {user ? <h1>Olá {user?.uid}</h1> : <h1>Olá visitante</h1>}
+      {user ? <Button onClick={() => signOut()}>Sign Out</Button> : null}
     </main>
   );
 }

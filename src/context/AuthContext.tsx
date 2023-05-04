@@ -6,18 +6,15 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  User,
 } from "firebase/auth";
 
 import { auth } from "@/firebase";
 
-interface FirebaseUser {
-  uid: string;
-  displayName: string | null;
-  email: string | null;
-}
-
 interface State {
-  user: FirebaseUser | null;
+  user: User | null;
   loading: boolean;
   error: string | null;
 }
@@ -25,12 +22,13 @@ interface State {
 type Action =
   | { type: "LOADING" }
   | { type: "LOGOUT_SUCCESS" }
-  | { type: "LOGIN_SUCCESS"; payload: FirebaseUser }
+  | { type: "LOGIN_SUCCESS"; payload: User }
   | { type: "LOGIN_ERROR"; payload: string };
 
 interface ActionsState {
   dispatch: Dispatch<Action>;
   signIn(email: string, password: string): Promise<void>;
+  signInWithGoogle(): Promise<void>;
   signOut(): Promise<void>;
 }
 
@@ -43,6 +41,7 @@ const initialState: State = {
 const initialActionsState: ActionsState = {
   dispatch: () => {},
   signIn: async (email: string, password: string) => {},
+  signInWithGoogle: async () => {},
   signOut: async () => {},
 };
 
@@ -64,6 +63,8 @@ const reducer: Reducer<State, Action> = (state, action) => {
 const AuthContext = createContext(initialState);
 const AuthActionsContext = createContext(initialActionsState);
 
+const googleProvider = new GoogleAuthProvider();
+
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const actionsState = useMemo<ActionsState>(
@@ -81,9 +82,20 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       },
       async signOut() {
         dispatch({ type: "LOADING" });
-
         try {
-          await signOut(auth);
+          await signOut(auth).then(() => console.log("Deslogado"));
+        } catch (error) {
+          console.error(error);
+        }
+      },
+
+      async signInWithGoogle() {
+        dispatch({ type: "LOADING" });
+        try {
+          await signInWithPopup(auth, googleProvider).then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            console.log(credential, "credential");
+          });
         } catch (error) {
           console.error(error);
         }

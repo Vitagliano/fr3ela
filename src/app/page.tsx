@@ -17,6 +17,7 @@ export default function Home() {
 
         <Link href="/signin">Sign In</Link>
         <Link href="/signup">Sign Up</Link>
+        <Link href="/dashboard">Dashboard</Link>
       </div>
       {user ? <h1>Olá {user?.uid}</h1> : <h1>Olá visitante</h1>}
       {user ? <Button onClick={() => signOut()}>Sign Out</Button> : null}

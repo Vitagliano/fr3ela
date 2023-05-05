@@ -4,18 +4,18 @@ import React, { useEffect, useState } from "react";
 import Input from "../Input";
 import { Button } from "../Button";
 
-export const LoginWithMail = () => {
-  const { signIn } = useAuthActions();
+export const RegisterWithMail = () => {
+  const { signUp } = useAuthActions();
 
   const [data, setData] = useState({
     email: "" as string,
     password: "" as string,
   });
 
-  const handleLogin = async (e: any) => {
+  const handleRegister = async (e: any) => {
     e.preventDefault();
     try {
-      await signIn(data.email, data.password);
+      await signUp(data.email, data.password);
     } catch (err) {
       console.log(err);
     }
@@ -23,7 +23,7 @@ export const LoginWithMail = () => {
 
   return (
     <>
-      <form onSubmit={handleLogin} className="flex flex-col gap-4">
+      <form onSubmit={handleRegister} className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <label className="font-medium">Email</label>
           <Input
@@ -53,10 +53,10 @@ export const LoginWithMail = () => {
           />
         </div>
 
-        <Button type="submit">Sign in</Button>
+        <Button type="submit">Sign up</Button>
       </form>
     </>
   );
 };
 
-export default LoginWithMail;
+export default RegisterWithMail;

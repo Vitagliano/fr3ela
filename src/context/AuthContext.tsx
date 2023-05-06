@@ -11,6 +11,7 @@ import {
   signInWithPopup,
   User,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
 } from "firebase/auth";
 
 import { auth, db } from "@/firebase";
@@ -174,6 +175,10 @@ export async function checkUserDocExists(
   return docSnap.exists();
 }
 
+export async function verifyUserEmail(user: User): Promise<void> {
+  await sendEmailVerification(user);
+}
+
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const router = useRouter();
@@ -189,6 +194,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
             email,
             password
           );
+          console.log("user: " + user.emailVerified);
           const userData: UserDoc = userDoc(user);
           createUserDoc(user.uid, userData)
             .then((isUserCreated) => {
@@ -214,6 +220,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
           await signInWithEmailAndPassword(auth, email, password).then(
             async (userCredential) => {
               const user = userCredential.user;
+              console.log("user: " + user.emailVerified);
               const userExists = await checkUserDocExists(user.uid);
               if (userExists) {
                 dispatch({ type: "LOGIN_SUCCESS", payload: user });

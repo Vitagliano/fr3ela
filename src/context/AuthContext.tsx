@@ -16,43 +16,14 @@ import {
 
 import { auth, db } from "@/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-
-export type UserFullName = {
-  firstName: string;
-  lastName: string;
-};
-
-export type UserRoles = {
-  seller: boolean;
-  buyer: boolean;
-};
-
-export type UserSkill = {
-  name: string;
-  subSkills: string[];
-};
-
-export type UserEducation = {
-  degree: string;
-  major: string;
-  school: string;
-  year: number;
-};
-
-export type UserCertification = {
-  name: string;
-  authority: string;
-  year: number;
-};
-
-export type UserExperience = {
-  title: string;
-  company: string;
-  location: string;
-  startYear: number;
-  endYear: number;
-  description: string;
-};
+import {
+  UserCertification,
+  UserEducation,
+  UserExperience,
+  UserFullName,
+  UserRoles,
+  UserSkill,
+} from "@/types";
 
 export interface UserDoc {
   name: UserFullName;

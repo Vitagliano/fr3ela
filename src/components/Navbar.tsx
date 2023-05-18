@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "./Button";
-import { useAuthActions } from "@/context/AuthContext";
+import { useAuthActions } from "@/context/Auth";
 
 const navigation = [
   { title: "Customers", path: "/" },

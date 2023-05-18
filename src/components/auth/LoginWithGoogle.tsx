@@ -1,5 +1,5 @@
 "use client";
-import { useAuthActions } from "@/context/AuthContext";
+import { useAuthActions } from "@/context/Auth";
 import React from "react";
 import { Button } from "../Button";
 import { useRouter } from "next/navigation";

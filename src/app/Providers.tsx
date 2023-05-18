@@ -1,6 +1,6 @@
 "use client";
 import { ThemeProvider } from "next-themes";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider } from "@/context/Auth";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (

@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/Auth";
 import { useGetUserDoc } from "@/hooks/useGetUser";
 
 export default function Onboarding() {

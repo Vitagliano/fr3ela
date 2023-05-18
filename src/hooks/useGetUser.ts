@@ -1,61 +1,10 @@
-import { useEffect, useState } from "react";
+import type { UserDoc } from "@/types";
 import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { db } from "../firebase";
-export type UserFullName = {
-  firstName: string;
-  lastName: string;
-};
-
-export type UserRoles = {
-  seller: boolean;
-  buyer: boolean;
-};
-
-export type UserSkill = {
-  name: string;
-  subSkills: string[];
-};
-
-export type UserEducation = {
-  degree: string;
-  major: string;
-  school: string;
-  year: number;
-};
-
-export type UserCertification = {
-  name: string;
-  authority: string;
-  year: number;
-};
-
-export type UserExperience = {
-  title: string;
-  company: string;
-  location: string;
-  startYear: number;
-  endYear: number;
-  description: string;
-};
-
-export interface User {
-  name: UserFullName;
-  username: string;
-  description: string;
-  location: string;
-  languages: string[];
-  timezone: string;
-  roles: UserRoles;
-  skills: UserSkill[];
-  education: UserEducation[];
-  certifications: UserCertification[];
-  experience: UserExperience[];
-  createdAt: Date | string;
-  updatedAt: Date | string;
-}
 
 export const useGetUserDoc = (uid: string | undefined) => {
-  const [userDoc, setUserDoc] = useState<User | null>(null);
+  const [userDoc, setUserDoc] = useState<UserDoc | null>(null);
 
   useEffect(() => {
     const getUserDoc = async (uid: string) => {
@@ -63,7 +12,7 @@ export const useGetUserDoc = (uid: string | undefined) => {
         const docRef = doc(db, "users", uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setUserDoc(docSnap.data() as User);
+          setUserDoc(docSnap.data() as UserDoc);
         } else {
           console.log("No such document!");
         }

@@ -3,7 +3,7 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Link from "next/link";
 import { Button } from "@/components/Button";
 import Input from "@/components/Input";
-import { useAuth, useAuthActions } from "@/context/AuthContext";
+import { useAuth, useAuthActions } from "@/context/Auth";
 import Navbar from "@/components/Navbar";
 
 export default function Home() {

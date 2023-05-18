@@ -35,23 +35,28 @@ export type UserExperience = {
   description: string;
 };
 
-export type Error = {
-  firstName: boolean;
-  lastName: boolean;
-  seller: boolean;
-  buyer: boolean;
-  skillName: boolean;
-  subSkills: boolean;
-  degree: boolean;
-  major: boolean;
-  school: boolean;
-  year: boolean;
-  certificationName: boolean;
-  authority: boolean;
-  title: boolean;
-  company: boolean;
-  location: boolean;
-  startYear: boolean;
-  endYear: boolean;
-  description: boolean;
-};
+export interface UserDoc {
+  name: UserFullName;
+  username: string;
+  description: string;
+  location: string;
+  languages: string[];
+  timezone: string;
+  roles: UserRoles;
+  skills: UserSkill[];
+  education: UserEducation[];
+  certifications: UserCertification[];
+  experience: UserExperience[];
+  createdAt: Date | string;
+  updatedAt: Date | string;
+}
+
+export type UserKeys =
+  | keyof UserFullName
+  | keyof UserRoles
+  | keyof UserSkill
+  | keyof UserEducation
+  | keyof UserCertification
+  | keyof UserExperience;
+
+export type Error = Record<UserKeys, boolean>;

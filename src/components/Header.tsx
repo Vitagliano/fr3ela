@@ -7,7 +7,7 @@ import Link from "next/link";
 import Navbar from "./Navbar";
 import Subnav from "./Subnav";
 import Banner from "./Banner";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/Auth";
 import { sendEmailVerification } from "firebase/auth";
 
 export const Header = () => {

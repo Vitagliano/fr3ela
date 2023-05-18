@@ -1,5 +1,5 @@
 "use client";
-import { useAuth, useAuthActions } from "@/context/AuthContext";
+import { useAuth, useAuthActions } from "@/context/Auth";
 import React, { useEffect, useState } from "react";
 import Input from "../Input";
 import { Button } from "../Button";

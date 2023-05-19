@@ -4,7 +4,7 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { useAuth, useAuthActions } from "@/context/Auth";
 import Link from "next/link";
 
-export default function Home() {
+function Home() {
   const { user } = useAuth();
   const { signOut } = useAuthActions();
 
@@ -22,3 +22,5 @@ export default function Home() {
     </main>
   );
 }
+
+export default Home;

@@ -11,37 +11,22 @@ import { Button } from "./Button";
 import Navbar from "./Navbar";
 import Searchbar from "./Searchbar";
 import Subnav from "./Subnav";
+import EmailVerificationBanner from "./EmailVerificationBanner";
 
 export const Header = () => {
   // wtf is state?
   const [state, setState] = useState(false);
   const { user } = useAuth();
 
-  const isVerified =
-    user?.emailVerified === false ? (
-      <Banner
-        buttonLink="/"
-        bannerText="You need to verify your e-mail!"
-        buttonText="Click here to send <a href='/'>verification</a>"
-        close={false}
-        variant="default"
-      >
-        You need to verify your e-mail! Click here to send{" "}
-        <Button
-          className="font-semibold underline duration-150 hover:text-indigo-100 inline-flex items-center gap-x-1 !p-0"
-          onClick={() => sendEmailVerification(user)}
-        >
-          verification
-        </Button>
-        .
-      </Banner>
-    ) : null;
-
-  console.log(user);
+  const isUnverified = user?.emailVerified === false; 
 
   return (
     <>
-      {isVerified}
+      {isUnverified ? (
+        <EmailVerificationBanner
+          sendEmailVerification={() => sendEmailVerification(user)}
+        />
+      ) : null}
       <header className="bg-white text-base lg:text-sm">
         <div
           className={clsx(

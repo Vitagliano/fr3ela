@@ -14,8 +14,8 @@ export default function SignIn() {
             <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
               Log in to your account
             </h3>
-            <p className="">
-              Don't have an account?{" "}
+            <p>
+              Don&#39;t have an account?{" "}
               <Link
                 href="/signup"
                 className="font-medium text-indigo-600 hover:text-indigo-500"

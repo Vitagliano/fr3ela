@@ -1,15 +1,16 @@
 "use client";
 import { ThemeProvider } from "next-themes";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider } from "@/context/Auth";
+import { PWC } from "@/types/components";
 
-const Providers = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <AuthProvider>
-      <ThemeProvider enableSystem={true} attribute="class">
-        {children}
-      </ThemeProvider>
-    </AuthProvider>
-  );
-};
+ThemeProvider.displayName = "ThemeProvider";
+
+const Providers = ({ children }: PWC) => (
+  <AuthProvider>
+    <ThemeProvider enableSystem={true} attribute="class">
+      {children}
+    </ThemeProvider>
+  </AuthProvider>
+);
 
 export default Providers;

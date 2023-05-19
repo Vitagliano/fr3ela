@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "./Button";
-import { useAuthActions } from "@/context/AuthContext";
+import { useAuthActions } from "@/context/Auth";
+import clsx from "clsx";
 
 const navigation = [
   { title: "Customers", path: "/" },
   { title: "Careers", path: "/" },
   { title: "Guides", path: "/" },
-  { title: "Partners", path: "/" },
+  { title: "Partners", path: "/" }
 ];
 
 const navigationItems = navigation.map((item, idx) => (
@@ -21,7 +22,7 @@ const navigationItems = navigation.map((item, idx) => (
 const userNavigation = [
   { title: "Your Profile", path: "/" },
   { title: "Settings", path: "/" },
-  { title: "Sign out", path: "/" },
+  { title: "Sign out", path: "/" }
 ];
 
 const userNavigationItems = userNavigation.map((item, idx) => (
@@ -36,6 +37,7 @@ const userNavigationItems = userNavigation.map((item, idx) => (
 ));
 
 const AvatarMenu = () => {
+  // wtf is state?
   const [state, setState] = useState(false);
   const { signOut } = useAuthActions();
 
@@ -49,13 +51,15 @@ const AvatarMenu = () => {
           <img
             src="https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg"
             className="w-full h-full rounded-full"
+            alt="Avatar"
           />
         </button>
       </div>
       <ul
-        className={`bg-white top-14 right-0 mt-6 space-y-6 lg:absolute lg:border lg:rounded-md lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${
-          state ? "" : "lg:hidden"
-        }`}
+        className={clsx(
+          "bg-white top-14 right-0 mt-6 space-y-6 lg:absolute lg:border lg:rounded-md lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0",
+          !state && "lg:hidden"
+        )}
       >
         {userNavigationItems}
         <Button

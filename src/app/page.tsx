@@ -1,12 +1,10 @@
 "use client";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
-import Link from "next/link";
 import { Button } from "@/components/Button";
-import Input from "@/components/Input";
-import { useAuth, useAuthActions } from "@/context/AuthContext";
-import Navbar from "@/components/Navbar";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { useAuth, useAuthActions } from "@/context/Auth";
+import Link from "next/link";
 
-export default function Home() {
+function Home() {
   const { user } = useAuth();
   const { signOut } = useAuthActions();
 
@@ -19,8 +17,10 @@ export default function Home() {
         <Link href="/signup">Sign Up</Link>
         <Link href="/dashboard">Dashboard</Link>
       </div>
-      {user ? <h1>Olá {user?.uid}</h1> : <h1>Olá visitante</h1>}
-      {user ? <Button onClick={() => signOut()}>Sign Out</Button> : null}
+      {user ? <h1>Olá {user?.displayName}</h1> : <h1>Olá visitante</h1>}
+      {user ? <Button onClick={signOut}>Sign Out</Button> : null}
     </main>
   );
 }
+
+export default Home;

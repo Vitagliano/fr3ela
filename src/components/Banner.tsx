@@ -1,8 +1,7 @@
 "use client";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import React, { ReactNode, useState } from "react";
 import { Button } from "./Button";
-import { XMarkIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
 
 type BannerProps = {
   children: ReactNode;
@@ -34,30 +33,26 @@ const Banner: React.FC<BannerProps> = ({
   const [bannerClosed, setBannerClosed] = useState(false);
   const variantClass = variants[variant];
 
-  const handleBannerClose = () => {
-    setBannerClosed(true);
-  };
+  const handleBannerClose = () => setBannerClosed(true);
+
+  if (bannerClosed) return null;
 
   return (
-    <>
-      {!bannerClosed ? (
-        <div className={variantClass}>
-          <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-start justify-between text-white sm:items-center md:px-8">
-            <div className="flex-1 justify-center flex items-start gap-x-4 sm:items-center">
-              <p className="font-medium p-2">{children}</p>
-            </div>
-            {close && (
-              <Button
-                onClick={() => handleBannerClose()}
-                className={`!p-2 rounded-lg duration-150 ${variantClass} ring-offset-2 focus:ring`}
-              >
-                <XMarkIcon className="w-6 h-6" />
-              </Button>
-            )}
-          </div>
+    <div className={variantClass}>
+      <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-start justify-between text-white sm:items-center md:px-8">
+        <div className="flex-1 justify-center flex items-start gap-x-4 sm:items-center">
+          <p className="font-medium p-2">{children}</p>
         </div>
-      ) : null}
-    </>
+        {close ? (
+          <Button
+            onClick={() => handleBannerClose()}
+            className={`!p-2 rounded-lg duration-150 ${variantClass} ring-offset-2 focus:ring`}
+          >
+            <XMarkIcon className="w-6 h-6" />
+          </Button>
+        ) : null}
+      </div>
+    </div>
   );
 };
 

@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import Link from "next/link";
 
 const submenuNav = [
   { title: "Overview", path: "/" },
@@ -14,12 +15,12 @@ const submenuItems = submenuNav.map((item, idx) => (
     key={idx}
     className={`py-1 ${idx === 0 ? "border-b-2 border-indigo-600" : ""}`}
   >
-    <a
+    <Link
       href={item.path}
       className="block py-2 px-3 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100 duration-150"
     >
       {item.title}
-    </a>
+    </Link>
   </li>
 ));
 

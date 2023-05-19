@@ -18,9 +18,13 @@ const sizes = {
 
 const variants = {
   primary:
-    "text-white duration-150 bg-indigo-600 rounded-lg hover:bg-indigo-700 active:shadow-lg",
+    "text-white duration-150 " +
+    "bg-indigo-600 rounded-lg " +
+    "hover:bg-indigo-700 active:shadow-lg",
   secondary:
-    "text-indigo-600 duration-150 bg-white border border-indigo-600 rounded-lg hover:bg-indigo-600 hover:text-white active:shadow-lg",
+    "text-indigo-600 duration-150 bg-white " +
+    "border border-indigo-600 rounded-lg " +
+    "hover:bg-indigo-600 hover:text-white active:shadow-lg",
 };
 
 export const Button = ({

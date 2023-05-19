@@ -1,12 +1,9 @@
 "use client";
 import { useAuthActions } from "@/context/Auth";
-import React from "react";
 import { Button } from "../Button";
-import { useRouter } from "next/navigation";
 import GoogleIcon from "../icons/GoogleIcon";
 
 export const LoginWithGoogle = () => {
-  const router = useRouter();
   const { signInWithGoogle } = useAuthActions();
 
   return (

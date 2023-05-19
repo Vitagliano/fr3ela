@@ -1,11 +1,10 @@
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import {
   DetailedHTMLProps,
   InputHTMLAttributes,
   forwardRef,
   useState,
 } from "react";
-import { Button } from "./Button";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 type InputProps = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -35,25 +34,26 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className="relative">
         <input
           ref={ref}
-          type={type === "password" && isPasswordHidden ? "password" : "text"}
+          type={isPasswordHidden ? "password" : "text"}
           className={`px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg ${className}`}
           {...props}
         />
-        {type === "password" && (
-          <button
-            className="text-gray-400 absolute right-4 inset-y-0 my-auto active:text-gray-600"
-            onClick={() => setPasswordHidden(!isPasswordHidden)}
-          >
-            {isPasswordHidden ? (
-              <EyeIcon className="h-6 w-6 cursor-pointer" />
-            ) : (
-              <EyeSlashIcon className="h-6 w-6 cursor-pointer" />
-            )}
-          </button>
-        )}
+
+        <button
+          className="text-gray-400 absolute right-4 inset-y-0 my-auto active:text-gray-600"
+          onClick={() => setPasswordHidden(!isPasswordHidden)}
+        >
+          {isPasswordHidden ? (
+            <EyeIcon className="h-6 w-6 cursor-pointer" />
+          ) : (
+            <EyeSlashIcon className="h-6 w-6 cursor-pointer" />
+          )}
+        </button>
       </div>
     );
   }
 );
+
+Input.displayName = "Input";
 
 export default Input;

@@ -1,4 +1,4 @@
-import type { UserDoc } from "@/types";
+import type { UserDoc } from "@/types/user";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";

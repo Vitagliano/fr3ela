@@ -1,5 +1,5 @@
 import { db } from "@/firebase";
-import { UserDoc } from "@/types";
+import { UserDoc } from "@/types/user";
 import {
   Auth,
   GoogleAuthProvider,

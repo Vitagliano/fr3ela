@@ -1,3 +1,4 @@
+import { Credentials } from "@/types/credentials";
 import type { User } from "firebase/auth";
 import type { Dispatch } from "react";
 
@@ -18,8 +19,8 @@ export type Action =
 
 export interface ActionsState {
   dispatch: Dispatch<Action>;
-  signUp(email: string, password: string): Promise<void>;
-  signIn(email: string, password: string): Promise<void>;
+  signUp(credentials: Credentials): Promise<void>;
+  signIn(credentials: Credentials): Promise<void>;
   signInWithGoogle(): Promise<void>;
   signOut(): Promise<void>;
 }

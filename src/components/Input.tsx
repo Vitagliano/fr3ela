@@ -1,3 +1,4 @@
+'use client';
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import {
   DetailedHTMLProps,
@@ -39,11 +40,19 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
 
+        {/*
+          O problema está aqui nesse botão e na interação entre form e button
+          por padrão, todo button dentro de um form tem type="submit"
+          e isso faz com que o onSubmit seja chamado
+          para resolver isso, basta adicionar type="button" no botão
+          agora o onSubmit não é mais chamado quando o password visibility é alterado
+          e as mensagens de erro não aparecem mais
+          e o componente não é mais re-renderizado          
+        */}
         <button
+          type="button"
           className="text-gray-400 absolute right-4 inset-y-0 my-auto active:text-gray-600"
-          onClick={e => {
-            setPasswordHidden(!isPasswordHidden);
-          }}
+          onClick={() => setPasswordHidden(!isPasswordHidden)}
         >
           {isPasswordHidden ? (
             <EyeIcon className="h-6 w-6 cursor-pointer" />

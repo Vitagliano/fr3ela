@@ -7,7 +7,9 @@ import { useAuthState } from "@/hooks/useAuthState";
 import { initialActionsState, initialState } from "./state";
 
 const AuthContext = createContext(initialState);
+AuthContext.displayName = "AuthContext";
 const AuthActionsContext = createContext(initialActionsState);
+AuthActionsContext.displayName = "AuthActionsContext";
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [state, actionsState, dispatch] = useAuthState();

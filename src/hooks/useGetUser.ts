@@ -7,21 +7,24 @@ export const useGetUserDoc = (uid: string | undefined) => {
   const [userDoc, setUserDoc] = useState<UserDoc | null>(null);
 
   useEffect(() => {
-    const getUserDoc = async (uid: string) => {
+    if (!uid) return;
+
+    getUserDoc(uid);
+
+    async function getUserDoc(id: string) {
       try {
-        const docRef = doc(db, "users", uid);
+        const docRef = doc(db, "users", id);
         const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setUserDoc(docSnap.data() as UserDoc);
-        } else {
+
+        if (!docSnap.exists()) {
           console.log("No such document!");
+          return;
         }
+
+        setUserDoc(docSnap.data() as UserDoc);
       } catch (error) {
         console.log("Error getting document:", error);
       }
-    };
-    if (uid) {
-      getUserDoc(uid);
     }
   }, [uid]);
 

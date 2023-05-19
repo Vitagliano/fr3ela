@@ -5,17 +5,17 @@ import type { Dispatch } from "react";
 export interface State {
   user: User | null;
   loading: boolean;
-  error: string | null;
+  error: Error | null;
 }
 
 export type Action =
   | { type: "LOADING" }
   | { type: "LOGOUT_SUCCESS" }
-  | { type: "LOGOUT_ERROR"; payload: string }
+  | { type: "LOGOUT_ERROR"; payload: Error }
   | { type: "REGISTER_SUCCESS"; payload: User }
-  | { type: "REGISTER_ERROR"; payload: string }
+  | { type: "REGISTER_ERROR"; payload: Error }
   | { type: "LOGIN_SUCCESS"; payload: User }
-  | { type: "LOGIN_ERROR"; payload: string };
+  | { type: "LOGIN_ERROR"; payload: Error };
 
 export interface ActionsState {
   dispatch: Dispatch<Action>;

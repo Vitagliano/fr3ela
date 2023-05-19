@@ -18,16 +18,15 @@ const schema = z.object({
     .min(6, { message: "Password must be at least 6 characters long" })
 });
 
+const resolver = zodResolver(schema);
+
 export const LoginWithMail = () => {
+  const { signIn } = useAuthActions();
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<Credentials>({
-    resolver: zodResolver(schema)
-  });
-  const { signIn } = useAuthActions();
-
+  } = useForm<Credentials>({ resolver });
   const onSubmit = useMemo(() => handleSubmit(signIn), [handleSubmit, signIn]);
 
   return (

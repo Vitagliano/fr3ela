@@ -3,7 +3,7 @@ import {
   DetailedHTMLProps,
   InputHTMLAttributes,
   forwardRef,
-  useState,
+  useState
 } from "react";
 
 type InputProps = DetailedHTMLProps<
@@ -41,7 +41,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
         <button
           className="text-gray-400 absolute right-4 inset-y-0 my-auto active:text-gray-600"
-          onClick={() => setPasswordHidden(!isPasswordHidden)}
+          onClick={e => {
+            setPasswordHidden(!isPasswordHidden);
+          }}
         >
           {isPasswordHidden ? (
             <EyeIcon className="h-6 w-6 cursor-pointer" />

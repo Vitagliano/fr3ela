@@ -13,7 +13,6 @@ import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { type Dispatch, useMemo, useReducer } from "react";
 
-let r: any;
 export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -30,7 +29,7 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
           if (!isUserCreated)
             return dispatch({
               type: "REGISTER_ERROR",
-              payload: "Failed to create user document."
+              payload: Error("Failed to create user document.")
             });
 
           console.log("User document created successfully.");
@@ -39,7 +38,7 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
         } catch (error) {
           dispatch({
             type: "REGISTER_ERROR",
-            payload: (error as Error).message
+            payload: error as Error
           });
         }
       },
@@ -56,7 +55,7 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
             if (!isUserCreated)
               return dispatch({
                 type: "REGISTER_ERROR",
-                payload: "Failed to create user document."
+                payload: Error("Failed to create user document.")
               });
 
             dispatch({ type: "REGISTER_SUCCESS", payload: user });
@@ -67,7 +66,7 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
         } catch (error) {
           dispatch({
             type: "LOGIN_ERROR",
-            payload: (error as Error).message
+            payload: error as Error
           });
         }
       },
@@ -84,7 +83,7 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
             if (!isUserCreated)
               return dispatch({
                 type: "REGISTER_ERROR",
-                payload: "Failed to create user document."
+                payload: Error("Failed to create user document.")
               });
 
             dispatch({ type: "REGISTER_SUCCESS", payload: user });
@@ -97,7 +96,7 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
           router.prefetch("/dashboard");
           router.push("/dashboard");
         } catch (error) {
-          dispatch({ type: "LOGIN_ERROR", payload: (error as Error).message });
+          dispatch({ type: "LOGIN_ERROR", payload: error as Error });
         }
       },
 
@@ -109,7 +108,7 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
         } catch (error) {
           dispatch({
             type: "LOGOUT_ERROR",
-            payload: (error as Error).message
+            payload: error as Error
           });
         }
       }

@@ -1,0 +1,5 @@
+@tailwind base;
+
+.input {
+  @apply w-full border-gray-200 bg-white shadow-sm;
+}

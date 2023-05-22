@@ -3,8 +3,8 @@ import { ButtonHTMLAttributes } from "react";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
-  variant?: "primary" | "secondary";
-  size?: "sm" | "base" | "md" | "lg" | "xl";
+  variant?: keyof typeof variants;
+  size?: keyof typeof sizes;
   className?: string;
 };
 

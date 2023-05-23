@@ -15,3 +15,13 @@
     @apply bg-default text-default;
   }
 }
+
+@layer components {
+  .card {
+    @apply dark:bg-card-dark bg-card-light p-5 rounded-lg shadow-lg;
+  }
+
+  .card-darker {
+    @apply card dark:bg-card-darker;
+  }
+}

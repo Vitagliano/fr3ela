@@ -11,7 +11,7 @@ export type NavigationIconProps = {
 const NavigationIcon = ({ alt, className, href }: NavigationIconProps) => (
   <Link
     className={clsx(
-      "inline-flex h-16 w-16 items-center justify-center rounded-full bg-default text-blue-600 sm:h-20 sm:w-20",
+      "inline-flex h-16 w-16 items-center justify-center rounded-full text-blue-600 sm:h-20 sm:w-20",
       className
     )}
     href={href}

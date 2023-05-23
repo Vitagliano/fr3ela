@@ -1,3 +1,6 @@
+const talwindNesting = require("tailwindcss/nesting");
+const colors = require("tailwindcss/colors");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
@@ -7,7 +10,16 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
-    extend: {}
+    extend: {
+      colors: {
+        card: {
+          light: colors.zinc[200],
+          DEFAULT: colors.zinc[500],
+          dark: colors.zinc[700],
+          darker: colors.zinc[800]
+        }
+      }
+    }
   },
-  plugins: [require("tailwindcss/nesting")]
+  plugins: [talwindNesting]
 };

@@ -3,3 +3,11 @@
 .input {
   @apply w-full border-gray-200 bg-white shadow-sm;
 }
+
+.link {
+  @apply text-gray-700 underline dark:text-gray-600;
+}
+
+.caption {
+  @apply text-sm text-gray-500 dark:text-gray-400;
+}

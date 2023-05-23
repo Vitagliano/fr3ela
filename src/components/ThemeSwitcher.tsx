@@ -1,6 +1,7 @@
 "use client";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "next-themes";
+import { useEffect } from "react";
 
 export const ThemeSwitcher = () => {
   const { systemTheme, theme, setTheme } = useTheme();

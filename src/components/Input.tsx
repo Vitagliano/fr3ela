@@ -59,7 +59,7 @@ const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
 
         <button
           type="button"
-          className="text-gray-400 absolute right-4 inset-y-0 h-min my-auto active:text-gray-600"
+          className="text-gray-400 absolute right-2 inset-y-0 h-min my-auto active:text-gray-600"
           onClick={() => setPasswordHidden(!isPasswordHidden)}
         >
           {isPasswordHidden ? (

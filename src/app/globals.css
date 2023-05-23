@@ -3,7 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  .bg-default {
+    @apply dark:bg-zinc-900 bg-zinc-100;
+  }
+
+  .text-default {
+    @apply dark:text-zinc-100 text-zinc-900;
+  }
+
   body {
-    @apply dark:bg-zinc-900 bg-zinc-100 dark:text-zinc-100 text-zinc-900;
+    @apply bg-default text-default;
   }
 }

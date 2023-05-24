@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
+import { getMoralisAuth } from "@moralisweb3/client-firebase-auth-utils";
 
 export const app = initializeApp({
   apiKey: String(process.env.NEXT_PUBLIC_FIREBASE_API_KEY),
@@ -11,12 +12,16 @@ export const app = initializeApp({
   messagingSenderId: String(
     process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
   ),
-  appId: String(process.env.NEXT_PUBLIC_FIREBASE_APP_ID),
+  appId: String(process.env.NEXT_PUBLIC_FIREBASE_APP_ID)
 });
 
 export const auth = getAuth(app);
 export const functions = getFunctions(app);
 export const db = getFirestore(app);
+export const moralisAuth = getMoralisAuth(app, {
+  auth,
+  functions
+});
 
 export async function initFirebase() {
   // eslint-disable-next-line no-undef

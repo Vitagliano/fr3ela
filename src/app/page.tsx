@@ -4,6 +4,8 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { useAuth, useAuthActions } from "@/context/Auth";
 import Link from "next/link";
 
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+
 function Home() {
   const { user } = useAuth();
   const { signOut } = useAuthActions();
@@ -19,6 +21,7 @@ function Home() {
       </div>
       {user ? <h1>Olá {user?.displayName}</h1> : <h1>Olá visitante</h1>}
       {user ? <Button onClick={signOut}>Sign Out</Button> : null}
+      <ConnectButton />
     </main>
   );
 }

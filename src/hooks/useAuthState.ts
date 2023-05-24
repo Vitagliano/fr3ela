@@ -1,6 +1,6 @@
 import { initialState, reducer } from "@/context/Auth/state";
 import type { Action, ActionsState, State } from "@/context/Auth/types";
-import { auth } from "@/firebase";
+import { auth, moralisAuth } from "@/firebase";
 import { googleProvider } from "@/firebase/providers";
 import {
   checkUserDocExists,
@@ -12,6 +12,8 @@ import {
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { type Dispatch, useMemo, useReducer } from "react";
+
+// import { signInWithMoralis } from "@moralisweb3/client-firebase-evm-auth";
 
 export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
   const router = useRouter();
@@ -42,6 +44,7 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
           });
         }
       },
+
       async signIn({ email, password }) {
         dispatch({ type: "LOADING" });
         try {
@@ -99,6 +102,37 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
           dispatch({ type: "LOGIN_ERROR", payload: error as Error });
         }
       },
+
+      // async signWithWallet() {
+      //   dispatch({ type: "LOADING" });
+      //   try {
+      //     const user = await signInWithMoralis(moralisAuth, {
+      //       provider: webSocketProvider
+      //     });
+      //     const userExists = await checkUserDocExists(user.uid);
+
+      //     if (!userExists) {
+      //       const isUserCreated = await createEmptyUserDoc(user);
+
+      //       if (!isUserCreated)
+      //         return dispatch({
+      //           type: "REGISTER_ERROR",
+      //           payload: Error("Failed to create user document.")
+      //         });
+
+      //       dispatch({ type: "REGISTER_SUCCESS", payload: user });
+      //     } else
+      //       dispatch({
+      //         type: "LOGIN_SUCCESS",
+      //         payload: user
+      //       });
+
+      //     router.prefetch("/dashboard");
+      //     router.push("/dashboard");
+      //   } catch (error) {
+      //     dispatch({ type: "LOGIN_ERROR", payload: error as Error });
+      //   }
+      // },
 
       async signOut() {
         dispatch({ type: "LOADING" });

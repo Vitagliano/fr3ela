@@ -7,14 +7,14 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithEmailAndPassword,
-  signInWithPopup,
+  signInWithPopup
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export const userDoc = (user: User): UserDoc => ({
   name: {
     firstName: "",
-    lastName: "",
+    lastName: ""
   },
   username: "",
   description: "",
@@ -23,14 +23,14 @@ export const userDoc = (user: User): UserDoc => ({
   timezone: "",
   roles: {
     seller: false,
-    buyer: false,
+    buyer: false
   },
   skills: [],
   education: [],
   certifications: [],
   experience: [],
   createdAt: user.metadata.creationTime || "",
-  updatedAt: "",
+  updatedAt: ""
 });
 
 export async function createUserDoc(

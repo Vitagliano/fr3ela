@@ -7,10 +7,8 @@ import { useAuthActions } from "@/context/Auth";
 import clsx from "clsx";
 
 const navigation = [
-  { title: "Customers", path: "/" },
-  { title: "Careers", path: "/" },
-  { title: "Guides", path: "/" },
-  { title: "Partners", path: "/" }
+  { title: "Home", path: "/" },
+  { title: "Post Service", path: "/service/new" },
 ];
 
 const navigationItems = navigation.map((item, idx) => (
@@ -21,8 +19,6 @@ const navigationItems = navigation.map((item, idx) => (
 
 const userNavigation = [
   { title: "Your Profile", path: "/" },
-  { title: "Settings", path: "/" },
-  { title: "Sign out", path: "/" }
 ];
 
 const userNavigationItems = userNavigation.map((item, idx) => (

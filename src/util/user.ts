@@ -12,8 +12,10 @@ import {
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 import { signInWithMoralis } from "@moralisweb3/client-firebase-evm-auth";
-import { getNetwork } from "@wagmi/core";
+import { GetWebSocketPublicClientResult, getNetwork } from "@wagmi/core";
 import { useWebSocketPublicClient } from "wagmi";
+import { C } from "@wagmi/connectors/dist/base-5cce2182";
+import { W } from "@wagmi/core/dist/index-fc9ab085";
 
 export const userDoc = (user: User): UserDoc => ({
   wallet: user?.uid,
@@ -93,15 +95,26 @@ export async function signInPopup(auth: Auth, provider: GoogleAuthProvider) {
   return user;
 }
 
-export async function signInWithWallet() {
-  const { chain } = getNetwork();
+// export async function signInWithWallet() {
+//   const { chain } = getNetwork();
 
-  const webSocketProvider = useWebSocketPublicClient({
-    chainId: chain?.id || 80001
-  });
+//   const webSocketProvider = useWebSocketPublicClient({
+//     chainId: chain?.id || 80001
+//   });
+
+//   const { credentials: user } = await signInWithMoralis(moralisAuth, {
+//     provider: webSocketProvider as any
+//   });
+
+//   return user;
+// }
+
+export async function signInWithWallet(
+  webSocketProvider: GetWebSocketPublicClientResult<W> | C<any, any>
+) {
 
   const { credentials: user } = await signInWithMoralis(moralisAuth, {
-    provider: webSocketProvider as any
+    provider: webSocketProvider
   });
 
   return user;

@@ -1,9 +1,7 @@
 "use client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-import { useAuthActions } from "@/context/Auth";
 import { Button } from "../Button";
-import GoogleIcon from "../icons/GoogleIcon";
 
 export const LoginWithWallet = () => {
   return (

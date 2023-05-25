@@ -15,18 +15,24 @@ import { useRouter } from "next/navigation";
 import { type Dispatch, useMemo, useReducer } from "react";
 
 import { useAccount } from "wagmi";
-
+import { signInWithMoralis } from "@moralisweb3/client-firebase-evm-auth";
+import { getNetwork } from "@wagmi/core";
+import { useWebSocketPublicClient } from "wagmi";
 
 export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
+  const { chain } = getNetwork();
+  const webSocketProvider = useWebSocketPublicClient({
+    chainId: chain?.id || 80001
+  });
+
   useAccount({
-    onConnect({ address, connector, isReconnected }) {
+    async onConnect({ address, connector, isReconnected }) {
       console.log("Connected", { address, connector, isReconnected });
       try {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        signInWithWallet(connector).then(() => {
+        const user = await signInWithWallet(webSocketProvider);
+        if (user) {
           console.log("User authenticated");
-        });
+        }
       } catch (error) {
         console.error(error);
       }
@@ -121,28 +127,6 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
           router.push("/dashboard");
         } catch (error) {
           dispatch({ type: "LOGIN_ERROR", payload: error as Error });
-        }
-      },
-
-      async signInWithWallet(connector) {
-        dispatch({ type: "LOADING" });
-        try {
-          const { chain } = getNetwork();
-
-          const webSocketProvider = useWebSocketPublicClient({
-            chainId: chain?.id || 80001
-          });
-
-          const { credentials: user } = await signInWithMoralis(moralisAuth, {
-            provider: webSocketProvider
-          });
-
-          return user;
-        } catch (error) {
-          dispatch({
-            type: "LOGIN_ERROR",
-            payload: error as Error
-          });
         }
       },
 

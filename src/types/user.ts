@@ -36,6 +36,7 @@ export type UserExperience = {
 };
 
 export interface UserDoc {
+  wallet: string;
   name: UserFullName;
   username: string;
   description: string;

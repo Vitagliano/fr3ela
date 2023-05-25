@@ -7,15 +7,36 @@ import {
   createCredentialsUser,
   createEmptyUserDoc,
   signInCredentials,
-  signInPopup
+  signInPopup,
+  signInWithWallet
 } from "@/util/user";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { type Dispatch, useMemo, useReducer } from "react";
 
-// import { signInWithMoralis } from "@moralisweb3/client-firebase-evm-auth";
+import { useAccount } from "wagmi";
+
 
 export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
+  useAccount({
+    onConnect({ address, connector, isReconnected }) {
+      console.log("Connected", { address, connector, isReconnected });
+      try {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        signInWithWallet(connector).then(() => {
+          console.log("User authenticated");
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    onDisconnect() {
+      // signOut(auth);
+    }
+  });
+
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
   const actionsState = useMemo<ActionsState>(
@@ -103,36 +124,27 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
         }
       },
 
-      // async signWithWallet() {
-      //   dispatch({ type: "LOADING" });
-      //   try {
-      //     const user = await signInWithMoralis(moralisAuth, {
-      //       provider: webSocketProvider
-      //     });
-      //     const userExists = await checkUserDocExists(user.uid);
+      async signInWithWallet(connector) {
+        dispatch({ type: "LOADING" });
+        try {
+          const { chain } = getNetwork();
 
-      //     if (!userExists) {
-      //       const isUserCreated = await createEmptyUserDoc(user);
+          const webSocketProvider = useWebSocketPublicClient({
+            chainId: chain?.id || 80001
+          });
 
-      //       if (!isUserCreated)
-      //         return dispatch({
-      //           type: "REGISTER_ERROR",
-      //           payload: Error("Failed to create user document.")
-      //         });
+          const { credentials: user } = await signInWithMoralis(moralisAuth, {
+            provider: webSocketProvider
+          });
 
-      //       dispatch({ type: "REGISTER_SUCCESS", payload: user });
-      //     } else
-      //       dispatch({
-      //         type: "LOGIN_SUCCESS",
-      //         payload: user
-      //       });
-
-      //     router.prefetch("/dashboard");
-      //     router.push("/dashboard");
-      //   } catch (error) {
-      //     dispatch({ type: "LOGIN_ERROR", payload: error as Error });
-      //   }
-      // },
+          return user;
+        } catch (error) {
+          dispatch({
+            type: "LOGIN_ERROR",
+            payload: error as Error
+          });
+        }
+      },
 
       async signOut() {
         dispatch({ type: "LOADING" });

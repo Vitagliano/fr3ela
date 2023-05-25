@@ -15,7 +15,7 @@ import { publicProvider } from "wagmi/providers/public";
 
 import { FC, ReactNode, createContext, useContext, useEffect } from "react";
 
-const { chains, publicClient } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
     polygon,
@@ -37,7 +37,8 @@ const { connectors } = getDefaultWallets({
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  publicClient
+  publicClient,
+  webSocketPublicClient
 });
 
 export const Web3Provider: FC<{ children: ReactNode }> = ({ children }) => {

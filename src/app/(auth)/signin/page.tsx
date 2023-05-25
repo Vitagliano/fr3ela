@@ -1,5 +1,6 @@
 import LoginWithGoogle from "@/components/auth/LoginWithGoogle";
 import LoginWithMail from "@/components/auth/LoginWithMail";
+import LoginWithWallet from "@/components/auth/LoginWithWallet";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 
@@ -34,6 +35,8 @@ export default function SignIn() {
           </p>
         </div>
         <div className="space-y-4 text-sm font-medium">
+          <LoginWithWallet />
+
           <LoginWithGoogle />
 
           {/* <button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">

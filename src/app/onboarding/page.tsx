@@ -1,25 +1,27 @@
 "use client";
-import Input from "@/components/Input";
-import Link from "next/link";
-import "./style.css";
-import { Button } from "@/components/Button";
 import MultistepForm from "@/components/Form/Multistep";
-import { useState } from "react";
+import { StrictMode, useState } from "react";
 import BasicInfoForm from "./BasicInfoForm";
+import "./style.css";
+import PartialFormContainer from "@/components/Form/PartialFormContainer";
+
+const formSteps = [
+  <BasicInfoForm key={0} />,
+  <div key={1} className="form">
+    b
+  </div>
+];
 
 export default function Onboarding() {
-  const [current, setCurrent] = useState(0);
-
   return (
-    <MultistepForm
-      count={2}
-      onSubmit={() => {}}
-      next={() => setCurrent(prev => prev + 1)}
-      prev={() => setCurrent(prev => prev - 1)}
-      step={current}
-    >
-      <BasicInfoForm />
-      <div className="form">b</div>
-    </MultistepForm>
+    <StrictMode>
+      <MultistepForm
+        steps={formSteps}
+        onCompleted={console.log}
+        initData={{ name: "John Doe", email: "", password: "" }}
+      >
+        <PartialFormContainer />
+      </MultistepForm>
+    </StrictMode>
   );
 }

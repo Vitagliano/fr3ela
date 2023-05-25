@@ -41,7 +41,7 @@ export const LoginWithMail = () => {
     Isso é um problema dentro do Input então vamos resolver isso lá
   */
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4">
+    <form onComplete={onSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
         <label className="font-medium">Email</label>
         <Input

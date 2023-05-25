@@ -21,7 +21,7 @@ function OnboardingLayout({ children }: PWC) {
             aria-label="Main"
             className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-8 lg:px-16 lg:py-12 xl:col-span-8"
           >
-            <div className="max-w-xl lg:max-w-3xl">
+            <div className="max-w-xl lg:w-3xl">
               <WelcomeMessage />
 
               {children}

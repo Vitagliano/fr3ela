@@ -1,8 +1,12 @@
+"use client";
 import { Button } from "@/components/Button";
 import Input from "@/components/Input";
+import { useMultistepForm } from "@/context/Form";
 import Link from "next/link";
 
 function BasicInfoForm() {
+  const { next } = useMultistepForm<{ name: string }>();
+
   return (
     <div className="mt-8 grid grid-cols-6 gap-5 lg:gap-6 dark:text-inherit">
       <div className="col-span-6 sm:col-span-3">
@@ -93,6 +97,7 @@ function BasicInfoForm() {
 
       <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
         <Button
+          onClick={() => next({ name: "John Doe" })}
           variant="hover-outline"
           className="inline-block shrink-0 rounded-md text-sm font-medium text-white transitio"
         >

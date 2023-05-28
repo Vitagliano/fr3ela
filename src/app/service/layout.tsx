@@ -8,10 +8,7 @@ export const metadata = {
 };
 
 const ServiceLayout = ({ children }: PWC) => (
-  <PrivateRoute>
-    <Header />
-    {children}
-  </PrivateRoute>
+  <PrivateRoute>{children}</PrivateRoute>
 );
 
 export default ServiceLayout;

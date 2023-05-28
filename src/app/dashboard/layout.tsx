@@ -9,7 +9,7 @@ export const metadata = {
 
 const DashboardLayout = ({ children }: PWC) => (
   <PrivateRoute>
-    <Header />
+    {/* <Header /> */}
     {children}
   </PrivateRoute>
 );

@@ -10,12 +10,11 @@ import {
   signInPopup,
   signInWithWallet
 } from "@/util/user";
-import { signOut } from "firebase/auth";
+import { UserCredential, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { type Dispatch, useMemo, useReducer } from "react";
 
 import { useAccount } from "wagmi";
-import { signInWithMoralis } from "@moralisweb3/client-firebase-evm-auth";
 import { getNetwork } from "@wagmi/core";
 import { useWebSocketPublicClient } from "wagmi";
 
@@ -27,19 +26,32 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
 
   useAccount({
     async onConnect({ address, connector, isReconnected }) {
-      console.log("Connected", { address, connector, isReconnected });
       try {
-        const user = await signInWithWallet(webSocketProvider);
-        if (user) {
-          console.log("User authenticated");
-        }
+        const user: UserCredential = await signInWithWallet(webSocketProvider);
+        console.log("user", user);
+
+        // const userExists = await checkUserDocExists(address);
+        // if (!userExists) {
+        // const isUserCreated = await createEmptyUserDoc(user);
+
+        // if (!isUserCreated)
+        //   return dispatch({
+        //     type: "REGISTER_ERROR",
+        //     payload: Error("Failed to create user document.")
+        //   });
+
+        // dispatch({ type: "REGISTER_SUCCESS", payload: user });
+        // } else dispatch({ type: "LOGIN_SUCCESS", payload: user });
+
+        router.prefetch("/dashboard");
+        router.push("/dashboard");
       } catch (error) {
         console.error(error);
       }
     },
 
     onDisconnect() {
-      // signOut(auth);
+      signOut(auth);
     }
   });
 

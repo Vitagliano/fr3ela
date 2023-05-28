@@ -1,6 +1,6 @@
 import LoginWithGoogle from "@/components/auth/LoginWithGoogle";
 import LoginWithMail from "@/components/auth/LoginWithMail";
-import LoginWithWallet from "@/components/auth/LoginWithWallet";
+import LoginWithWallet from "@/components/auth/ConnectWallet";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 

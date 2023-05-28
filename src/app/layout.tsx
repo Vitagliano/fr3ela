@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import Providers from "./Providers";
 import "./globals.css";
 import { PWC } from "@/types/components";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,10 @@ function RootLayout({ children }: PWC) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

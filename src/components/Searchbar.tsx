@@ -4,7 +4,7 @@ import Input from "./Input";
 export const Searchbar = () => {
   return (
     <form
-      onComplete={() => {}}
+      onSubmit={() => {}}
       className="flex-1 items-center justify-start pb-4 lg:flex lg:pb-0"
     >
       <div className="flex items-center gap-1 px-2 border rounded-lg">

@@ -1,9 +1,9 @@
 "use client";
 import { AuthProvider } from "@/context/Auth";
 import { PWC } from "@/types/components";
+import { Web3Provider } from "@/util/web3";
 import { ThemeProvider, useTheme } from "next-themes";
 import { useEffect } from "react";
-import { Web3Provider } from "@/util/web3";
 
 const ThemeEventSwitcher = ({ children }: PWC) => {
   const { theme, setTheme, systemTheme } = useTheme();
@@ -12,7 +12,7 @@ const ThemeEventSwitcher = ({ children }: PWC) => {
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      console.log(e)
+      console.log(e);
       if (e.ctrlKey && e.code === "KeyQ")
         setTheme(currentTheme === "dark" ? "light" : "dark");
     };

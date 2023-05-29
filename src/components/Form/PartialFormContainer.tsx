@@ -11,16 +11,17 @@ export type PartialFormContainerProps = Omit<
 function PartialFormContainer(props: PartialFormContainerProps) {
   const { className, ...rest } = props;
   const steps = useFormSteps();
-  const { step, steps: count } = useMultistepForm();
+  const { step } = useMultistepForm();
 
   const wrappedSteps = useMemo(
     () =>
       steps.map((el, i) => (
         <div
           key={i}
+          id={`form-step-${i}`}
           className={clsx(
-            "form card-darker",
-            step === i && "active",
+            "w-full transition-all duration-700 ease-in-out absolute -translate-y-1/2 top-1/2 card-darker",
+            step === i && "active delay-200",
             step < i && "right",
             step > i && "left"
           )}
@@ -32,7 +33,7 @@ function PartialFormContainer(props: PartialFormContainerProps) {
   );
 
   return (
-    <div {...rest} className={clsx("relative contents", className)}>
+    <div {...rest} className={clsx("lg:relative mx-auto h-full", className)}>
       {wrappedSteps}
     </div>
   );

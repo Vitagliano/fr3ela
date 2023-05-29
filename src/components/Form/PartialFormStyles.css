@@ -4,24 +4,14 @@
 
 /* Carousel-like behaviour */
 
-.form {
-  @apply transition-all duration-500 ease-in-out absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
-}
-
 .active {
-  z-index: 1;
-  transform: translateX(0) scale(1);
-  display: block;
+  @apply translate-x-0 scale-100;
 }
 
 .right {
-  z-index: -1;
-  transform: translateX(115%) scale(0);
-  display: none;
+  @apply translate-x-full scale-0;
 }
 
 .left {
-  z-index: -1;
-  transform: translateX(-115%) scale(0);
-  display: none;
+  @apply -translate-x-full scale-0;
 }

@@ -21,7 +21,7 @@ function MultistepForm<T>(props: MultistepFormProps<T>) {
   } = props;
 
   return (
-    <div {...rest} className={clsx('min-w-full relative contents min-h-full', className)}>
+    <div {...rest} className={clsx('w-full h-full overflow-hidden', className)}>
       <MultistepFormProvider<T>
         init={{
           data: initData,

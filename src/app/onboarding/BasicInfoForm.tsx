@@ -5,7 +5,7 @@ import { useMultistepForm } from "@/context/Form";
 import Link from "next/link";
 
 function BasicInfoForm() {
-  const { next } = useMultistepForm<{ name: string }>();
+  const { next, prev, step } = useMultistepForm<{ name: string }>();
 
   return (
     <div className="mt-8 grid grid-cols-6 gap-5 lg:gap-6 dark:text-inherit">
@@ -96,10 +96,19 @@ function BasicInfoForm() {
       </div>
 
       <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
+        {step !== 0 ? (
+          <Button
+            onClick={() => prev()}
+            variant="hover-outline"
+            className="text-sm"
+          >
+            Go Back
+          </Button>
+        ) : null}
         <Button
           onClick={() => next({ name: "John Doe" })}
           variant="hover-outline"
-          className="inline-block shrink-0 rounded-md text-sm font-medium text-white transitio"
+          className="inline-block shrink-0 rounded-md text-sm font-medium text-white transitiom"
         >
           Create an account
         </Button>

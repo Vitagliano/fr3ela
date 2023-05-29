@@ -3,6 +3,7 @@ import { AuthProvider } from "@/context/Auth";
 import { PWC } from "@/types/components";
 import { ThemeProvider, useTheme } from "next-themes";
 import { useEffect } from "react";
+import { Web3Provider } from "@/util/web3";
 
 const ThemeEventSwitcher = ({ children }: PWC) => {
   const { theme, setTheme, systemTheme } = useTheme();
@@ -26,9 +27,11 @@ const ThemeEventSwitcher = ({ children }: PWC) => {
 
 const Providers = ({ children }: PWC) => (
   <AuthProvider>
-    <ThemeProvider enableSystem={true} attribute="class">
-      <ThemeEventSwitcher>{children}</ThemeEventSwitcher>
-    </ThemeProvider>
+    <Web3Provider>
+      <ThemeProvider enableSystem={true} attribute="class">
+        <ThemeEventSwitcher>{children}</ThemeEventSwitcher>
+      </ThemeProvider>
+    </Web3Provider>
   </AuthProvider>
 );
 

@@ -1,19 +1,60 @@
 import { initialState, reducer } from "@/context/Auth/state";
 import type { Action, ActionsState, State } from "@/context/Auth/types";
-import { auth } from "@/firebase";
+import { auth, moralisAuth } from "@/firebase";
 import { googleProvider } from "@/firebase/providers";
 import {
   checkUserDocExists,
   createCredentialsUser,
   createEmptyUserDoc,
   signInCredentials,
-  signInPopup
+  signInPopup,
+  signInWithWallet
 } from "@/util/user";
-import { signOut } from "firebase/auth";
+import { UserCredential, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { type Dispatch, useMemo, useReducer } from "react";
 
+import { useAccount } from "wagmi";
+import { getNetwork } from "@wagmi/core";
+import { useWebSocketPublicClient } from "wagmi";
+
 export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
+  const { chain } = getNetwork();
+  const webSocketProvider = useWebSocketPublicClient({
+    chainId: chain?.id || 80001
+  });
+
+  useAccount({
+    async onConnect({ address, connector, isReconnected }) {
+      try {
+        const user: UserCredential = await signInWithWallet(webSocketProvider);
+        console.log("user", user);
+
+        // const userExists = await checkUserDocExists(address);
+        // if (!userExists) {
+        // const isUserCreated = await createEmptyUserDoc(user);
+
+        // if (!isUserCreated)
+        //   return dispatch({
+        //     type: "REGISTER_ERROR",
+        //     payload: Error("Failed to create user document.")
+        //   });
+
+        // dispatch({ type: "REGISTER_SUCCESS", payload: user });
+        // } else dispatch({ type: "LOGIN_SUCCESS", payload: user });
+
+        router.prefetch("/dashboard");
+        router.push("/dashboard");
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    onDisconnect() {
+      signOut(auth);
+    }
+  });
+
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
   const actionsState = useMemo<ActionsState>(
@@ -42,6 +83,7 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
           });
         }
       },
+
       async signIn({ email, password }) {
         dispatch({ type: "LOADING" });
         try {

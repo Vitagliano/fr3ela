@@ -9,7 +9,7 @@ import ConnectWallet from "./auth/ConnectWallet";
 
 const navigation = [
   { title: "Home", path: "/" },
-  { title: "Post Service", path: "/service/new" }
+  { title: "Post Gig", path: "/gig/new" }
 ];
 
 const navigationItems = navigation.map((item, idx) => (
@@ -22,6 +22,7 @@ const navigationItems = navigation.map((item, idx) => (
 
 export const Navbar = () => {
   const { user } = useAuth();
+  console.log(user, "user")
 
   return (
     <>

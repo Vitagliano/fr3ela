@@ -30,7 +30,6 @@ export const reducer: Reducer<State, Action> = (state, action) => {
       console.error("LOGIN_ERROR: " + action.payload.stack);
       return { ...state, loading: false, error: action.payload };
     case "REGISTER_SUCCESS":
-      console.log("User document created successfully.");
       return { user: action.payload, loading: false, error: null };
     case "REGISTER_ERROR":
       console.error("REGISTER_ERROR: " + action.payload);

@@ -28,7 +28,6 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
     async onConnect({ address, connector, isReconnected }) {
       try {
         const user: UserCredential = await signInWithWallet(webSocketProvider);
-        console.log("user", user);
 
         // const userExists = await checkUserDocExists(address);
         // if (!userExists) {
@@ -64,7 +63,6 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
         dispatch({ type: "LOADING" });
         try {
           const user = await createCredentialsUser(auth, email, password);
-          console.log("user: " + user.emailVerified);
           const isUserCreated = await createEmptyUserDoc(user);
 
           if (!isUserCreated)
@@ -73,7 +71,6 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
               payload: Error("Failed to create user document.")
             });
 
-          console.log("User document created successfully.");
           router.prefetch("/dashboard");
           router.push("/dashboard");
         } catch (error) {
@@ -88,7 +85,6 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
         dispatch({ type: "LOADING" });
         try {
           const user = await signInCredentials(auth, email, password);
-          console.log("user: " + user.emailVerified);
           const userExists = await checkUserDocExists(user.uid);
 
           if (!userExists) {

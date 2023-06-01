@@ -22,7 +22,6 @@ const navigationItems = navigation.map((item, idx) => (
 
 export const Navbar = () => {
   const { user } = useAuth();
-  console.log(user, "user")
 
   return (
     <>

@@ -91,7 +91,6 @@ export const ConnectWallet = () => {
           account &&
           chain &&
           (!authenticationStatus || authenticationStatus === "authenticated");
-        console.log("Ready & connected!", connected ? "Yes" : "No");
         return (
           <div
             {...(!ready && {

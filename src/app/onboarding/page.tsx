@@ -5,7 +5,6 @@ import { useGetUserDoc } from "@/hooks/useGetUser";
 export default function Onboarding() {
   const { user } = useAuth();
   const userData = useGetUserDoc(user?.uid);
-  console.log(userData, "userData");
   return (
     <>
       <form action="#" className="mt-8 grid grid-cols-6 gap-6">

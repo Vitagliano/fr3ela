@@ -38,5 +38,8 @@
     "viem": "^0.3.33",
     "wagmi": "^1.0.5",
     "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "postcss-nesting": "^11.2.2"
   }
 }

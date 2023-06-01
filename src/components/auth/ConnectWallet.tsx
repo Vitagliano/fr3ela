@@ -1,19 +1,26 @@
 "use client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-import { Button } from "../Button";
+import { useAuthActions } from "@/context/Auth";
 import {
   ArrowRightOnRectangleIcon,
   UserIcon,
   WalletIcon,
   WrenchIcon
 } from "@heroicons/react/24/solid";
+import clsx from "clsx";
 import Link from "next/link";
 import { useState } from "react";
-import { useAuthActions } from "@/context/Auth";
-import clsx from "clsx";
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
+import { Button } from "../Button";
 import ThemeSwitcher from "../ThemeSwitcher";
+
+type Account = Exclude<
+  Parameters<
+    Parameters<typeof ConnectButton.Custom>[0]["children"]
+  >[0]["account"],
+  undefined
+>;
 
 const userNavigation = [
   {
@@ -39,7 +46,7 @@ const userNavigationItems = userNavigation.map((item, idx) => (
   </li>
 ));
 
-const UserMenu = ({ account }) => {
+const UserMenu = ({ account }: { account: Account }) => {
   const [state, setState] = useState(false);
   const { signOut } = useAuthActions();
 

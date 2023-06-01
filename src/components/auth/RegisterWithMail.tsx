@@ -30,19 +30,8 @@ export const RegisterWithMail = () => {
 
   const onSubmit = useMemo(() => handleSubmit(signUp), [handleSubmit, signUp]);
 
-  /* 
-    onSubmit está sendo chamado quando não deveria
-    por exemplo quando o passwordVisibility é alterado
-    isso nao deveria acontecer e causa o componente inteiro
-    a ser re-renderizado
-    é possivel perceber isso acontecendo simplesmente
-    pela aparição das mensagens de erro quando o password visibility é alterado
-    ou também utilizando a opçao "highlight updates when components render"
-    do react devtools (Components Panel > Settings Icon > General > Highlight Updates When Components Render)
-    Isso é um problema dentro do Input então vamos resolver isso lá
-  */
   return (
-    <form onComplete={onSubmit} className="flex flex-col gap-4">
+    <form onSubmit={onSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
         <label className="font-medium">Email</label>
         <Input

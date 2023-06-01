@@ -14,7 +14,7 @@ import Subnav from "./Subnav";
 import EmailVerificationBanner from "./EmailVerificationBanner";
 
 export const Header = () => {
-  // wtf is state?
+  
   const [state, setState] = useState(false);
   const { user } = useAuth();
 

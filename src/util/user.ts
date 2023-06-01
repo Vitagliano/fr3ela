@@ -1,4 +1,4 @@
-import { db } from "@/firebase";
+import { db, moralisAuth } from "@/firebase";
 import { UserDoc } from "@/types/user";
 import {
   Auth,
@@ -7,14 +7,19 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithEmailAndPassword,
-  signInWithPopup,
+  signInWithPopup
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
+import { signInWithMoralis } from "@moralisweb3/client-firebase-evm-auth";
+import { GetWebSocketPublicClientResult } from "@wagmi/core";
+import { WebSocketPublicClient } from "wagmi";
+
 export const userDoc = (user: User): UserDoc => ({
+  wallet: user?.displayName,
   name: {
     firstName: "",
-    lastName: "",
+    lastName: ""
   },
   username: "",
   description: "",
@@ -23,14 +28,14 @@ export const userDoc = (user: User): UserDoc => ({
   timezone: "",
   roles: {
     seller: false,
-    buyer: false,
+    buyer: false
   },
   skills: [],
   education: [],
   certifications: [],
   experience: [],
   createdAt: user.metadata.creationTime || "",
-  updatedAt: "",
+  updatedAt: ""
 });
 
 export async function createUserDoc(
@@ -84,6 +89,30 @@ export async function signInCredentials(
 
 export async function signInPopup(auth: Auth, provider: GoogleAuthProvider) {
   const { user } = await signInWithPopup(auth, provider);
+
+  return user;
+}
+
+// export async function signInWithWallet() {
+//   const { chain } = getNetwork();
+
+//   const webSocketProvider = useWebSocketPublicClient({
+//     chainId: chain?.id || 80001
+//   });
+
+//   const { credentials: user } = await signInWithMoralis(moralisAuth, {
+//     provider: webSocketProvider as any
+//   });
+
+//   return user;
+// }
+
+export async function signInWithWallet(
+  webSocketProvider: GetWebSocketPublicClientResult<WebSocketPublicClient>
+) {
+  const { credentials: user } = await signInWithMoralis(moralisAuth, {
+    provider: webSocketProvider as any
+  });
 
   return user;
 }

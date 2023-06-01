@@ -1,0 +1,13 @@
+@tailwind base;
+
+.input {
+  @apply w-full dark:border-gray-200 bg-white shadow-sm border-zinc-900;
+}
+
+.link {
+  @apply text-gray-700 underline dark:text-gray-500;
+}
+
+.caption {
+  @apply text-sm text-gray-500 dark:text-gray-300;
+}

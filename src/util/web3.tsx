@@ -1,19 +1,21 @@
+"use client";
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import {
-  mainnet,
-  polygon,
-  optimism,
   arbitrum,
-  polygonMumbai,
   avalanche,
-  avalancheFuji
+  avalancheFuji,
+  mainnet,
+  optimism,
+  polygon,
+  polygonMumbai
 } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
-import { FC, ReactNode, createContext, useContext, useEffect } from "react";
+import { PWC } from "@/types/components";
+import { useEffect, useState } from "react";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -41,12 +43,17 @@ const wagmiConfig = createConfig({
   webSocketPublicClient
 });
 
-export const Web3Provider: FC<{ children: ReactNode }> = ({ children }) => {
+export const Web3Provider = ({ children }: PWC) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains} modalSize="compact">
-        {children}
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <>
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider chains={chains} modalSize="compact">
+          {mounted ? children : null}
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </>
   );
 };

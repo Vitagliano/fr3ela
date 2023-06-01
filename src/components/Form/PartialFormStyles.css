@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Carousel-like behaviour */
+
+.active {
+  @apply translate-x-0 rotate-0 scale-100;
+}
+
+.right {
+  @apply translate-x-full rotate-6 scale-0;
+}
+
+.left {
+  @apply -translate-x-full -rotate-6 scale-0;
+}

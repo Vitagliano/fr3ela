@@ -3,7 +3,25 @@
 @tailwind utilities;
 
 @layer base {
-  body {
+  .bg-default {
     @apply dark:bg-zinc-900 bg-zinc-100;
+  }
+
+  .text-default {
+    @apply dark:text-zinc-100 text-zinc-900;
+  }
+
+  body {
+    @apply bg-default text-default;
+  }
+}
+
+@layer components {
+  .card {
+    @apply dark:bg-card-dark bg-card-light p-5 rounded-lg shadow-lg;
+  }
+
+  .card-darker {
+    @apply card dark:bg-card-darker bg-card;
   }
 }

@@ -13,6 +13,7 @@ export default function Onboarding() {
       <MultistepForm
         steps={formSteps}
         onCompleted={console.log}
+        className="mt-3"
         initData={{ name: "John Doe", email: "", password: "" }}
       >
         <PartialFormContainer className="max-w-xl lg:max-w-xl" />

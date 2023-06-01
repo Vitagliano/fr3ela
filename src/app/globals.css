@@ -22,6 +22,6 @@
   }
 
   .card-darker {
-    @apply card dark:bg-card-darker;
+    @apply card dark:bg-card-darker bg-card;
   }
 }

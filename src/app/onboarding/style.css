@@ -1,7 +1,7 @@
 @tailwind base;
 
 .input {
-  @apply w-full border-gray-200 bg-white shadow-sm;
+  @apply w-full dark:border-gray-200 bg-white shadow-sm border-zinc-900;
 }
 
 .link {

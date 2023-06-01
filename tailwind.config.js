@@ -14,7 +14,7 @@ module.exports = {
       colors: {
         card: {
           light: colors.zinc[200],
-          DEFAULT: colors.zinc[500],
+          DEFAULT: colors.zinc[300],
           dark: colors.zinc[700],
           darker: colors.zinc[800]
         }

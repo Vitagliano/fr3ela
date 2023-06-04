@@ -14,7 +14,7 @@ type BannerProps = {
 };
 
 const variants = {
-  default: "!bg-indigo-600",
+  default: "!bg-blue-600",
   info: "!bg-blue-600",
   error: "!bg-red-600",
   success: "!bg-green-600",

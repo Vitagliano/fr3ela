@@ -23,7 +23,7 @@ const sizes = {
 };
 
 const inputStyle =
-  "text-gray-500 bg-transparent outline-none border focus:border-indigo-600";
+  "text-gray-500 bg-transparent outline-none border focus:border-blue-600";
 
 const labelStyle = "block text-sm font-medium";
 

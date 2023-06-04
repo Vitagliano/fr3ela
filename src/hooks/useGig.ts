@@ -24,7 +24,7 @@ const useGig = () => {
     const unsubscribe = onSnapshot(q, querySnapshot => {
       const gigData: GigDoc[] = [];
       querySnapshot.forEach(doc => {
-        gigData.push({ ...doc.data(), userId: doc.id } as GigDoc);
+        gigData.push({ ...doc.data(), userId: doc.data().userId } as GigDoc);
       });
       setGigs(gigData);
     });
@@ -44,17 +44,6 @@ const useGig = () => {
     return null;
   };
 
-  const uploadImages = async (images: File[]) => {
-    const imageUrls = await Promise.all(
-      images.map(async image => {
-        const imageRef = ref(storage, `images/${image.name}`);
-        await uploadBytes(imageRef, image);
-        return await getDownloadURL(imageRef);
-      })
-    );
-    return imageUrls;
-  };
-
   const createGig = async (
     gig: Omit<GigDoc, "userId" | "createdAt" | "updatedAt">,
     images?: File[]
@@ -62,7 +51,7 @@ const useGig = () => {
     if (!user) {
       console.log("User not authenticated");
     }
-    console.log("images", images);
+
     if (images) {
       console.log("Uploading images");
       const imageUrls = await Promise.all(
@@ -85,7 +74,7 @@ const useGig = () => {
     console.log("Creating gig", gig);
     const newGig: GigDoc = {
       ...gig,
-      userId: user.uid,
+      userId: user?.uid,
       createdAt: createdAt,
       updatedAt: ""
     };

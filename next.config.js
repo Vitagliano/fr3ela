@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true
   },
   images: {
-    domains: ["images.unsplash.com", "api.uifaces.co"]
+    domains: ["firebasestorage.googleapis.com", "i.pravatar.cc"]
   },
   webpack: config => {
     config.resolve.fallback = { fs: false, net: false, tls: false };

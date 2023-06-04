@@ -8,11 +8,6 @@ import PartialFormContainer from "@/components/Form/PartialFormContainer";
 const formSteps = [<BasicInfoForm key={0} />, <BasicInfoForm key={1} />];
 
 export default function Onboarding() {
-<<<<<<< HEAD
-  const { user } = useAuth();
-  const userData = useGetUserDoc(user?.uid);
-=======
->>>>>>> 0fbfd8f1dc2c6c7e5f2e043688b10589b2898720
   return (
     <StrictMode>
       <MultistepForm

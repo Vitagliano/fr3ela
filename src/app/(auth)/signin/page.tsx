@@ -19,7 +19,7 @@ export default function SignIn() {
               Don&#39;t have an account?{" "}
               <Link
                 href="/signup"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
+                className="font-medium text-blue-600 hover:text-blue-500"
               >
                 Sign up
               </Link>
@@ -106,7 +106,7 @@ export default function SignIn() {
           </button> */}
         </div>
         {/* <div className="text-center">
-          <Link href="/" className="text-indigo-600 hover:text-indigo-500">
+          <Link href="/" className="text-blue-600 hover:text-blue-500">
             Forgot password?
           </Link>
         </div> */}

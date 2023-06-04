@@ -74,7 +74,7 @@ export default function NewGig() {
             <Input
               type="text"
               {...register("title")}
-              className="w-full"
+              className="px-3 py-2 text-gray-500 bg-white outline-none border focus:border-blue-600 shadow-sm rounded-lg w-full"
               placeholder="Give your gig a title"
               required
             />
@@ -88,7 +88,7 @@ export default function NewGig() {
             </label>
             <Input
               {...register("description")}
-              className="px-3 py-2 text-gray-500 bg-white outline-none border focus:border-indigo-600 shadow-sm rounded-lg w-full"
+              className="px-3 py-2 text-gray-500 bg-white outline-none border focus:border-blue-600 shadow-sm rounded-lg w-full"
               placeholder="Give your gig a description"
               required
             />

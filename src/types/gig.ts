@@ -1,5 +1,7 @@
+import { User } from "firebase/auth";
+
 export interface GigDoc {
-  userId: string;
+  userId: User["uid"];
   title: string;
   description: string;
   category: string;

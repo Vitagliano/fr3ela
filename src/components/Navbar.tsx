@@ -10,7 +10,7 @@ const navigation = [
 ];
 
 const navigationItems = navigation.map((item, idx) => (
-  <li key={idx} className="text-gray-600 hover:text-indigo-600">
+  <li key={idx} className="text-gray-600 hover:text-blue-600">
     <Link href={item.path}>{item.title}</Link>
   </li>
 ));

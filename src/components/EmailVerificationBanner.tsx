@@ -17,7 +17,7 @@ const EmailVerificationBanner = memo<EmailVerificationBannerProps>(props => (
   >
     You need to verify your e-mail! Click here to send{" "}
     <Button
-      className="font-semibold underline duration-150 hover:text-indigo-100 inline-flex items-center gap-x-1 !p-0"
+      className="font-semibold underline duration-150 hover:text-blue-100 inline-flex items-center gap-x-1 !p-0"
       onClick={props.sendEmailVerification}
     >
       verification

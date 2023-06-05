@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 import { HTMLAttributes } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,9 +10,9 @@ type CardProps = HTMLAttributes<HTMLDivElement> & {
   imgAlt?: string;
 };
 
-const imageStyle = {
+const imageStyle: CSSProperties = {
   width: "100%",
-  objectFit: "cover",
+  objectFit: "cover"
 };
 
 export const Card = ({
@@ -24,6 +24,11 @@ export const Card = ({
 }: CardProps) => {
   return (
     <div className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      {
+        //! NUNCA usar && para renderização condicional
+        //* Use sempre ternários `cond ? <Component /> : null`
+        //? https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-jsx
+      }
       {imgSrc && (
         <Link href="#" className="h-52 overflow-hidden relative flex">
           <Image

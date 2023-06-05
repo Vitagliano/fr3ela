@@ -10,7 +10,8 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const MAX_FILE_SIZE = 500000;
+// use number separators for readability
+const MAX_FILE_SIZE = 5_000_000;
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -24,7 +25,7 @@ const schema = z.object({
   category: z.string().min(3).max(50),
   images: z
     .any()
-    .refine(files => files?.length == 1, "Image is required.")
+    .refine(files => files?.length === 1, "Image is required.")
     .refine(files => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
     .refine(
       files => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
@@ -60,6 +61,7 @@ export default function NewGig() {
     );
   };
 
+  // refactoring needed
   return (
     <div className="px-4 lg:px-8 max-w-screen-xl mx-auto py-12">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -119,7 +121,12 @@ export default function NewGig() {
               Images
             </label>
             <input type="file" multiple {...register("images")} />
-            {errors.images && <span>{errors.images.message}</span>}
+
+            {
+              //TODO: typecheck errors.images.message correctly
+            }
+
+            {errors.images && <span>{errors.images.message as string}</span>}
 
             <Button type="submit" className="mt-4">
               Create Gig

@@ -1,3 +1,4 @@
+"use client";
 import { initialState, reducer } from "@/context/Auth/state";
 import type { Action, ActionsState, State } from "@/context/Auth/types";
 import { auth, moralisAuth } from "@/firebase";

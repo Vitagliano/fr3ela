@@ -1,18 +1,35 @@
 import { GigDoc } from "@/types/gig";
 import { Card } from "../Card";
 import Link from "next/link";
-import Image from "next/image";
-import { useGetUserDoc } from "@/hooks/useGetUser";
-import { useAuth } from "@/context/Auth";
-import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import { StarIcon } from "@heroicons/react/24/solid";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
+import { UserDoc } from "@/types/user";
+import ClientJazzicon from "../icons/ClientJazzicon";
 
 interface GigCardProps {
   gig: GigDoc;
 }
 
-const GigCard = ({ gig }: GigCardProps) => {
-  const userData = useGetUserDoc(gig.userId);
+async function getUserDoc(id: string) {
+  try {
+    const docRef = doc(db, "users", id);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      console.log("No such document!");
+      return null;
+    }
+
+    return docSnap.data() as UserDoc;
+  } catch (error) {
+    console.log("Error getting document:", error);
+    return null;
+  }
+}
+
+const GigCard = async ({ gig }: GigCardProps) => {
+  const userData = await getUserDoc(gig.userId);
   const username = userData?.username || "Unknown User";
 
   return (
@@ -42,7 +59,7 @@ const GigCard = ({ gig }: GigCardProps) => {
       <hr className="my-2" />
       <div>
         <div className="flex gap-2 items-center">
-          <Jazzicon diameter={24} seed={0x12012012012} />
+          <ClientJazzicon address={0x12012012012} />
           <span className="text-sm">{username}</span>
         </div>
       </div>

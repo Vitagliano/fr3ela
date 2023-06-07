@@ -1,3 +1,4 @@
+"use client";
 import type { UserDoc } from "@/types/user";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -11,6 +12,7 @@ export const useGetUserDoc = (uid: string | undefined) => {
 
     getUserDoc(uid);
 
+    // função copiada para o server component GigCard.tsx
     async function getUserDoc(id: string) {
       try {
         const docRef = doc(db, "users", id);

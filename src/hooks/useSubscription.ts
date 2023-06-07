@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef } from "react";
 import { GigDoc } from "@/types/gig";
 import { db } from "@/firebase";

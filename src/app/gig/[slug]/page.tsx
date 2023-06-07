@@ -1,25 +1,31 @@
-"use client";
-
+import { gigQuery } from "@/firebase/queries";
 import { NextPageProps } from "@/types/components";
-import { NextPage } from "next";
-import useGig from "@/hooks/useGig";
 import { GigDoc } from "@/types/gig";
-import { useState, useEffect } from "react";
+import { getDocs, query, where } from "firebase/firestore";
 
+// fetch with react server components with static page generation and cache optimization
+// Speed goes brrrrr
 export default async function Gig({ params }: NextPageProps<{ slug: string }>) {
-  const { getGigBySlug } = useGig();
+  const gigSnapshot = query(gigQuery, where("slug", "==", params.slug));
 
-  const [gigData, setGig] = useState<GigDoc | null>();
+  const querySnapshot = await getDocs(gigSnapshot);
 
-  useEffect(() => {
-    const fetchGig = async () => {
-      const gig = await getGigBySlug(params.slug);
-      setGig(gig);
-      console.log(gig, "gig");
-    };
+  if (querySnapshot.empty)
+    // Handle possible not found
+    return <h1>404</h1>;
 
-    fetchGig();
-  }, [getGigBySlug, params]);
+  const gigData = querySnapshot.docs[0].data() as GigDoc;
 
-  return <div>Slug: {gigData?.category}</div>;
+  return <div>Slug: {gigData.category}</div>;
+}
+
+// Generate static pages for performance boost
+export async function generateStaticParams() {
+  const gigSnapshot = query(gigQuery);
+
+  const querySnapshot = await getDocs(gigSnapshot);
+
+  return querySnapshot.docs.map(doc => ({
+    slug: doc.data().slug
+  }));
 }

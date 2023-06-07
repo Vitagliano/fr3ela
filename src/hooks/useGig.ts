@@ -10,45 +10,71 @@ import {
   deleteDoc,
   onSnapshot,
   query,
-  getDoc
+  getDoc,
+  getDocs,
+  where
 } from "firebase/firestore";
 
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+import useSubscription from "./useSubscription";
+
+import { gigQuery } from "@/firebase/queries";
+
+const generateSlug = (title: string): string => {
+  const slug = title
+    .toLowerCase() // Convert to lowercase
+    .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric characters with hyphens
+    .replace(/(^-|-$)+/g, ""); // Remove leading/trailing hyphens  return slug;
+
+  return slug;
+};
+
 const useGig = () => {
   const { user } = useAuth();
 
-  const [gigs, setGigs] = useState<GigDoc[]>([]);
-
-  useEffect(() => {
-    const q = query(collection(db, "gigs"));
-    const unsubscribe = onSnapshot(q, snapshot => {
-      const gigData = snapshot.docs.map(doc => ({
-        ...doc.data()
-      })) as GigDoc[];
-
-      setGigs(gigData);
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+  const gigs = useSubscription<Array<GigDoc>>(
+    resolve =>
+      onSnapshot(gigQuery, snapshot =>
+        resolve(snapshot.docs.map(doc => doc.data() as GigDoc))
+      ),
+    [],
+    []
+  );
 
   const getGigById = async (id: string): Promise<GigDoc | null> => {
     const docRef = doc(db, "gigs", id);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      //                            userId? ou deveria existir um id em GigDoc?
-      return { ...docSnap.data() /* id: docRef.id */ } as GigDoc;
+      return { ...docSnap.data() } as GigDoc;
     }
 
     return null;
   };
 
+  // const getGigBySlug = async (slug: string): Promise<GigDoc | null> => {
+  //   const gigSnapshot = query(gigQuery, where("slug", "==", slug));
+
+  //   if (!gigSnapshot) {
+  //     return null;
+  //   }
+
+  //   const querySnapshot = await getDocs(gigSnapshot);
+  //   const gigs: GigDoc[] = [];
+
+  //   querySnapshot.forEach(doc => {
+  //     const gig = doc.data() as GigDoc;
+  //     gigs.push({
+  //       ...gig
+  //     });
+  //   });
+
+  //   return gigs.length > 0 ? gigs[0] : null;
+  // };
+
   const createGig = async (
-    gig: Omit<GigDoc, "userId" | "createdAt" | "updatedAt">,
+    gig: Omit<GigDoc, "userId" | "slug" | "createdAt" | "updatedAt">,
     images?: File[]
   ) => {
     if (!user) {
@@ -78,18 +104,14 @@ const useGig = () => {
 
     const createdAt = new Date().toISOString();
 
+    const slug = generateSlug(gig.title);
+
     console.log("Creating gig", gig);
     const newGig: GigDoc = {
       ...gig,
+      slug,
       createdAt,
       userId: user.uid,
-      /**
-       * aqui faz sentido ser createdAt inicialmente
-       * caso esse valor seja usado em algum lugar
-       * e evitar algo tipo
-       *
-       * const lastUpdate = gig.updatedAt || gig.createdAt;
-       */
       updatedAt: createdAt
     };
 
@@ -126,8 +148,6 @@ const useGig = () => {
 
     const gigRef = doc(db, "gigs", id);
 
-    // retornar uma promise tem o mesmo "efeito" de retornar um awaited result
-    // e pode ser levemente mais eficiente
     return updateDoc(gigRef, {
       ...updatedGig,
       updatedAt
@@ -154,12 +174,10 @@ const useGig = () => {
       throw Error("Unhandled");
     }
 
-    // retornar uma promise tem o mesmo "efeito" de retornar um awaited result
-    // e pode ser levemente mais eficiente
     return deleteDoc(doc(db, "gigs", id));
   };
 
-  return { gigs, createGig, editGig, deleteGig };
+  return { gigs, getGigById, createGig, editGig, deleteGig };
 };
 
 export default useGig;

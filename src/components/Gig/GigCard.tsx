@@ -16,13 +16,18 @@ const GigCard = ({ gig }: GigCardProps) => {
   const username = userData?.username || "Unknown User";
 
   return (
-    <Card key={gig.title} imgSrc={gig.images[0]} imgAlt={gig.title}>
+    <Card
+      key={gig.title}
+      imgSrc={gig.images[0]}
+      imgAlt={gig.title}
+      imgUrl={`/gig/` + gig.slug}
+    >
       <div className="flex gap-2 flex-col">
         <div className="flex gap-0 flex-col">
-          <Link href="/">
+          <Link href={`/gig/` + gig.slug}>
             <small className="text-gray-500">{gig.category}</small>
           </Link>
-          <Link href="/">
+          <Link href={`/gig/` + gig.slug}>
             <h2 className="text-lg font-medium">{gig.title}</h2>
           </Link>
         </div>

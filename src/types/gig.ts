@@ -3,6 +3,7 @@ import { User } from "firebase/auth";
 export interface GigDoc {
   userId: User["uid"];
   title: string;
+  slug: string;
   description: string;
   category: string;
   // packages: Package[];

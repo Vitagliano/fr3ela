@@ -80,7 +80,7 @@ export default function NewGig() {
               placeholder="Give your gig a title"
               required
             />
-            {errors.title && <span>{errors.title.message}</span>}
+            {errors.title ? <span>{errors.title.message}</span> : null}
 
             <label
               htmlFor="description"
@@ -94,7 +94,9 @@ export default function NewGig() {
               placeholder="Give your gig a description"
               required
             />
-            {errors.description && <span>{errors.description.message}</span>}
+            {errors.description ? (
+              <span>{errors.description.message}</span>
+            ) : null}
 
             <label
               htmlFor="category"
@@ -112,7 +114,7 @@ export default function NewGig() {
               <option value="Art">Art</option>
               <option value="Other">Other</option>
             </select>
-            {errors.category && <span>{errors.category.message}</span>}
+            {errors.category ? <span>{errors.category.message}</span> : null}
 
             <label
               htmlFor="images"
@@ -126,7 +128,9 @@ export default function NewGig() {
               //TODO: typecheck errors.images.message correctly
             }
 
-            {errors.images && <span>{errors.images.message as string}</span>}
+            {errors.images ? (
+              <span>{errors.images.message as string}</span>
+            ) : null}
 
             <Button type="submit" className="mt-4">
               Create Gig

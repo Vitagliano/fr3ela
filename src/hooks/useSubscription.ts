@@ -1,10 +1,6 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { GigDoc } from "@/types/gig";
-import { db } from "@/firebase";
-import { collection, onSnapshot, query, Query } from "firebase/firestore";
-import firebase from "firebase/app";
 import "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
 
 type Destructor = () => void;
 
@@ -15,7 +11,7 @@ interface Subscriber<T> {
 function useSubscription<T>(
   subscriber: Subscriber<T>,
   initialState: T | (() => T),
-  dependencyList: []
+  dependencyList: React.DependencyList = []
 ) {
   const [data, setData] = useState(initialState);
 

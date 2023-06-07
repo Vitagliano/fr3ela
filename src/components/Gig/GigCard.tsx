@@ -67,4 +67,4 @@ const GigCard = async ({ gig }: GigCardProps) => {
   );
 };
 
-export default GigCard;
+export default (GigCard as Awaited<typeof GigCard>);

@@ -12,7 +12,11 @@ const GigSection = ({ title, gigs }: Props) => {
       <h2>{title}</h2>
       <div className="mt-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {gigs.map(gig => (
-          <GigCard key={gig.title} gig={gig} />
+          <>
+            {/* Usando server components com async functions voce pode precisar disso */}
+            {/* @ts-expect-error Server Component */}
+            <GigCard key={gig.title} gig={gig} />
+          </>
         ))}
       </div>
     </section>

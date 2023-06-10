@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/context/Auth";
 import Link from "next/link";
-import ConnectWallet from "./auth/ConnectWallet";
+import ConnectWallet from "../auth/ConnectWallet";
 
 const navigation = [
   { title: "Home", path: "/" },
@@ -20,7 +20,7 @@ export const Navbar = () => {
 
   return (
     <>
-      {navigationItems}
+      {user ? navigationItems : null}
       <ConnectWallet />
     </>
   );

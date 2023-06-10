@@ -9,8 +9,8 @@ export default function Dashboard() {
   const userData = useGetUserDoc(user?.uid);
 
   return (
-    <div className="px-4 lg:px-8 max-w-screen-xl mx-auto bg-red-500 py-12">
-      <h3> Dashboard </h3>
+    <div className="px-4 lg:px-8 max-w-screen-xl mx-auto py-12">
+      {/* <h3> Dashboard </h3>
       <p> {user ? "Hello " + user.displayName : ""} </p>
       <Button onClick={() => signOut()}>Sair</Button>
       <p> {user ? user.metadata.creationTime : ""}</p>
@@ -46,8 +46,19 @@ export default function Dashboard() {
           <div className="flex items-center justify-center rounded-lg border-2 border-dashed border-blue-700 h-64 sm:h-32">
             b
           </div>
+        </div> */}
+      {/* </main> */}
+
+
+      <div className="grid sm:grid-cols-1 sm:gap-0 lg:grid-cols-3 lg:gap-4">
+
+        <div className="col-span-2 bg-red-200">
+          a
         </div>
-      </main>
+        <div className="bg-blue-200">
+          b
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import { initialState, reducer } from "@/context/Auth/state";
 import type { Action, ActionsState, State } from "@/context/Auth/types";
-import { auth, moralisAuth } from "@/firebase";
+import { auth, db, moralisAuth } from "@/firebase";
 import { googleProvider } from "@/firebase/providers";
 import {
   checkUserDocExists,
@@ -11,13 +11,14 @@ import {
   signInPopup,
   signInWithWallet
 } from "@/util/user";
-import { UserCredential, signOut } from "firebase/auth";
+import { User, UserCredential, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { type Dispatch, useMemo, useReducer } from "react";
 
 import { useAccount } from "wagmi";
 import { getNetwork } from "@wagmi/core";
 import { useWebSocketPublicClient } from "wagmi";
+import { doc, getDoc } from "firebase/firestore";
 
 export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
   const { chain } = getNetwork();
@@ -28,20 +29,39 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
   useAccount({
     async onConnect({ address, connector, isReconnected }) {
       try {
-        const user: UserCredential = await signInWithWallet(webSocketProvider);
+        console.log('hello world', { isReconnected });
 
-        // const userExists = await checkUserDocExists(address);
-        // if (!userExists) {
-        // const isUserCreated = await createEmptyUserDoc(user);
+        if (!isReconnected) {
+          const { user }: UserCredential = await signInWithWallet(
+            webSocketProvider
+          );
 
-        // if (!isUserCreated)
-        //   return dispatch({
-        //     type: "REGISTER_ERROR",
-        //     payload: Error("Failed to create user document.")
-        //   });
+          const userExists = await checkUserDocExists(address as string);
 
-        // dispatch({ type: "REGISTER_SUCCESS", payload: user });
-        // } else dispatch({ type: "LOGIN_SUCCESS", payload: user });
+          if (!userExists) {
+            const isUserCreated = await createEmptyUserDoc(user);
+  
+            if (!isUserCreated)
+              return dispatch({
+                type: "REGISTER_ERROR",
+                payload: Error("Failed to create user document.")
+              });
+  
+            dispatch({ type: "REGISTER_SUCCESS", payload: user });
+          }
+        } else {
+          const docRef = doc(db, "users", address as string);
+          const docSnap = await getDoc(docRef);
+          const user = docSnap.data() as User | undefined;
+
+          if (!user) 
+            return dispatch({
+              type: "LOGIN_ERROR",
+              payload: Error("Failed to login.")
+            });
+
+          dispatch({ type: "LOGIN_SUCCESS", payload: user });
+        }
 
         router.prefetch("/dashboard");
         router.push("/dashboard");

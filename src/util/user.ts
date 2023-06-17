@@ -28,7 +28,8 @@ export const userDoc = (user: User): UserDoc => ({
   timezone: "",
   roles: {
     seller: false,
-    buyer: false
+    buyer: false,
+    admin: false
   },
   skills: [],
   education: [],
@@ -92,20 +93,6 @@ export async function signInPopup(auth: Auth, provider: GoogleAuthProvider) {
 
   return user;
 }
-
-// export async function signInWithWallet() {
-//   const { chain } = getNetwork();
-
-//   const webSocketProvider = useWebSocketPublicClient({
-//     chainId: chain?.id || 80001
-//   });
-
-//   const { credentials: user } = await signInWithMoralis(moralisAuth, {
-//     provider: webSocketProvider as any
-//   });
-
-//   return user;
-// }
 
 export async function signInWithWallet(
   webSocketProvider: GetWebSocketPublicClientResult<WebSocketPublicClient>

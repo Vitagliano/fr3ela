@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import Providers from "./Providers";
 import "./globals.css";
 import { PWC } from "@/types/components";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 

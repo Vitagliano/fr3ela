@@ -2,31 +2,20 @@
 import { useAuth } from "@/context/Auth";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { sendEmailVerification } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import Banner from "./Banner";
-import { Button } from "./Button";
+import { Button } from "../Button";
 import Navbar from "./Navbar";
 import Searchbar from "./Searchbar";
 import Subnav from "./Subnav";
-import EmailVerificationBanner from "./EmailVerificationBanner";
+import CategoriesMenu from "./CategoriesMenu";
 
 export const Header = () => {
-  
   const [state, setState] = useState(false);
-  const { user } = useAuth();
-
-  const isUnverified = user?.emailVerified === false; 
 
   return (
     <>
-      {isUnverified ? (
-        <EmailVerificationBanner
-          sendEmailVerification={() => sendEmailVerification(user)}
-        />
-      ) : null}
       <header className="bg-white text-base lg:text-sm">
         <div
           className={clsx(
@@ -68,9 +57,7 @@ export const Header = () => {
             </ul>
           </div>
         </div>
-        <nav className="border-b">
-          <Subnav />
-        </nav>
+        <CategoriesMenu />
       </header>
     </>
   );

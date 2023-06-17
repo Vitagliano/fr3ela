@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 import PrivateRoute from "@/components/PrivateRoute";
 import { PWC } from "@/types/components";
 
@@ -9,7 +9,6 @@ export const metadata = {
 
 const DashboardLayout = ({ children }: PWC) => (
   <PrivateRoute>
-    {/* <Header /> */}
     {children}
   </PrivateRoute>
 );

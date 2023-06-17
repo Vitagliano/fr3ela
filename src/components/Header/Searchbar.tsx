@@ -1,5 +1,5 @@
 "use client";
-import Input from "./Input";
+import Input from "../Input";
 
 export const Searchbar = () => {
   return (

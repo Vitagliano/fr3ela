@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "default": "fr3ela"
+  },
+  "targets": {},
+  "etags": {
+    "fr3ela": {
+      "extensionInstances": {
+        "moralis-auth": "418959be9fcd0d96b35cd3efbeddd7daf4677abd10dc64721a9b6411790b0dd9"
+      }
+    }
+  }
+}

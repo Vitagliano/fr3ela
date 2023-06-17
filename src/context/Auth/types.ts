@@ -1,4 +1,5 @@
 import { Credentials } from "@/types/credentials";
+import { AuthenticationStatus } from "@rainbow-me/rainbowkit";
 import type { User } from "firebase/auth";
 import type { Dispatch } from "react";
 
@@ -6,6 +7,7 @@ export interface State {
   user: User | null;
   loading: boolean;
   error: Error | null;
+  status: AuthenticationStatus;
 }
 
 export type Action =

@@ -6,6 +6,7 @@ export type UserFullName = {
 export type UserRoles = {
   seller: boolean;
   buyer: boolean;
+  admin: boolean;
 };
 
 export type UserSkill = {

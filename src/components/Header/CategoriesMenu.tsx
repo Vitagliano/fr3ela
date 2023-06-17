@@ -5,15 +5,16 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 
 export const CategoriesMenu = () => {
   const [state, setState] = useState(false);
-  const [drapdownState, setDrapdownState] = useState({
+  const [dropdownState, setDropdownState] = useState({
     isActive: false,
-    idx: null
+    idx: -1
   });
   useEffect(() => {
     document.onclick = e => {
-      const target = e.target;
+      const target = e.target as HTMLElement;
+
       if (!target.closest(".nav-menu"))
-        setDrapdownState({ isActive: false, idx: null });
+        setDropdownState({ isActive: false, idx: -1 });
     };
   }, []);
 
@@ -73,21 +74,21 @@ export const CategoriesMenu = () => {
                     <button
                       className="w-full flex items-center justify-between gap-1 text-gray-700 hover:text-indigo-600"
                       onClick={() =>
-                        setDrapdownState({
+                        setDropdownState({
                           idx,
-                          isActive: !drapdownState.isActive
+                          isActive: !dropdownState.isActive
                         })
                       }
                     >
                       {item.name}
-                      {drapdownState.idx == idx && drapdownState.isActive ? (
+                      {dropdownState.idx == idx && dropdownState.isActive ? (
                         <ChevronUpIcon className="w-3 h-3" />
                       ) : (
                         <ChevronDownIcon className="w-3 h-3" />
                       )}
                     </button>
 
-                    {drapdownState.idx == idx && drapdownState.isActive ? (
+                    {dropdownState.idx == idx && dropdownState.isActive ? (
                       <div className="relative z-10 bg-white inset-x-0 w-full md:absolute md:border-y md:shadow-md md:mt-0">
                         <ul className="max-w-screen-xl mx-auto grid items-center gap-6 md:p-8 md:grid-cols-2 lg:grid-cols-3">
                           {item?.topics.map((topicItem, idx) => (

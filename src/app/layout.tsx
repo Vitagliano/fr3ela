@@ -3,7 +3,6 @@ import Providers from "./Providers";
 import "./globals.css";
 import { PWC } from "@/types/components";
 import Header from "@/components/Header/Header";
-import HeaderMenu from "@/components/Header/CategoriesMenu";
 
 const inter = Inter({ subsets: ["latin"] });
 

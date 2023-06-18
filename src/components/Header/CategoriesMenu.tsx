@@ -71,7 +71,7 @@ export const CategoriesMenu = () => {
                 return (
                   <li key={idx}>
                     <button
-                      className="w-full flex items-center justify-between gap-1 text-gray-700 hover:text-indigo-600"
+                      className="w-full flex items-center justify-between gap-1 text-gray-700 hover:text-blue-600"
                       onClick={() =>
                         setDrapdownState({
                           idx,
@@ -92,7 +92,7 @@ export const CategoriesMenu = () => {
                         <ul className="max-w-screen-xl mx-auto grid items-center gap-6 md:p-8 md:grid-cols-2 lg:grid-cols-3">
                           {item?.topics.map((topicItem, idx) => (
                             <li key={idx}>
-                              <p className="text-indigo-600 text-sm">
+                              <p className="text-blue-600 text-sm">
                                 {topicItem.name}
                               </p>
                               <ul className="mt-5 space-y-6">
@@ -103,7 +103,7 @@ export const CategoriesMenu = () => {
                                       className="flex gap-3 items-center"
                                     >
                                       <div>
-                                        <span className="text-gray-800 duration-200 group-hover:text-indigo-600 text-sm font-medium md:text-base">
+                                        <span className="text-gray-800 duration-200 group-hover:text-blue-600 text-sm font-medium md:text-base">
                                           {navItem.name}
                                         </span>
                                       </div>

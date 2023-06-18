@@ -1,6 +1,6 @@
 import { FormStepsProvider, MultistepFormProvider } from "@/context/Form";
 import clsx from "clsx";
-import { HTMLAttributes, ReactNode, createContext } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 export interface MultistepFormProps<T> extends HTMLAttributes<HTMLDivElement> {
   onCompleted(data: T): void;
@@ -21,7 +21,7 @@ function MultistepForm<T>(props: MultistepFormProps<T>) {
   } = props;
 
   return (
-    <div {...rest} className={clsx('w-full h-full overflow-hidden', className)}>
+    <div {...rest} className={clsx('w-full overflow-hidden', className)}>
       <MultistepFormProvider<T>
         init={{
           data: initData,

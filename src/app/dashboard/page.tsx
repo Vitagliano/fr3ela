@@ -1,12 +1,15 @@
-"use client";
 import { Button } from "@/components/Button";
 import { useAuth, useAuthActions } from "@/context/Auth";
+import { auth } from "@/firebase";
+import { getUserDoc } from "@/firebase/utils";
 import { useGetUserDoc } from "@/hooks/useGetUser";
 
-export default function Dashboard() {
-  const { user } = useAuth();
-  const { signOut } = useAuthActions();
-  const userData = useGetUserDoc(user?.uid);
+export default async function Dashboard() {
+  const user = auth.currentUser;
+
+  if (!user) return null;
+
+  const userDoc = await getUserDoc(user.uid);
 
   return (
     <div className="px-4 lg:px-8 max-w-screen-xl mx-auto py-12">
@@ -48,16 +51,9 @@ export default function Dashboard() {
           </div>
         </div> */}
       {/* </main> */}
-
-
       <div className="grid sm:grid-cols-1 sm:gap-0 lg:grid-cols-3 lg:gap-4">
-
-        <div className="col-span-2 bg-red-200">
-          a
-        </div>
-        <div className="bg-blue-200">
-          b
-        </div>
+        <div className="col-span-2 bg-red-200">a</div>
+        <div className="bg-blue-200">b</div>
       </div>
     </div>
   );

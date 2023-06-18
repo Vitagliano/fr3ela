@@ -61,7 +61,6 @@ export default function NewGig() {
     );
   };
 
-  // refactoring needed
   return (
     <div className="px-4 lg:px-8 max-w-screen-xl mx-auto py-12">
       <form onSubmit={handleSubmit(onSubmit)}>

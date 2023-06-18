@@ -39,7 +39,7 @@ export const RegisterWithMail = () => {
           type="email"
           {...register("email", { required: true })}
         />
-        {errors.email?.message && <p>{errors.email?.message}</p>}
+        {errors.email?.message ? <p>{errors.email?.message}</p> : null}
       </div>
       <div className="flex flex-col gap-2">
         <label className="font-medium">Password</label>
@@ -48,7 +48,7 @@ export const RegisterWithMail = () => {
           type="password"
           {...register("password", { required: true })}
         />
-        {errors.password?.message && <p>{errors.password?.message}</p>}
+        {errors.password?.message ? <p>{errors.password?.message}</p> : null}
       </div>
 
       <Button type="submit">Sign up</Button>

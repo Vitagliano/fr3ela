@@ -10,7 +10,7 @@ export type CategoryListProps = {
 
 async function CategoryList({ search }: CategoryListProps) {
   const categories = await getCategories(search);
-  console.log(categories);
+
   return (
     <ul
       id="category-list"

@@ -47,6 +47,9 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
 
             dispatch({ type: "REGISTER_SUCCESS", payload: user });
           }
+
+          router.prefetch("/dashboard");
+          router.push("/dashboard");
         } else {
           const docRef = query(userQuery, where("wallet", "==", address));
           const docSnap = await getDocs(docRef);
@@ -61,8 +64,11 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
           dispatch({ type: "LOGIN_SUCCESS", payload: user });
         }
 
+        /*
+        If the user is reconnected from session do not redirect 
         router.prefetch("/dashboard");
         router.push("/dashboard");
+        */
       } catch (error) {
         console.error(error);
       }

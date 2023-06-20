@@ -46,7 +46,9 @@ export async function getCategories(filter: CategoriesQueryFilter) {
     const queryRef = query(categoryQuery);
 
     const querySnapshot = await getDocs(queryRef);
-    const docs = querySnapshot.docs.map(doc => doc.data() as CategoryDoc);
+    const docs = querySnapshot.docs.map(
+      doc => ({ ...doc.data(), id: doc.id } as CategoryDoc)
+    );
 
     if (!name) return docs;
 

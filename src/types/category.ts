@@ -7,6 +7,7 @@ export type CategoryBase = {
 
 export type SubCategoryDoc = CategoryBase;
 export type CategoryDoc = CategoryBase & {
+  id: string;
   subCategories: SubCategoryDoc[];
 };
 

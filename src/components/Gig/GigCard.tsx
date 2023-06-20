@@ -13,6 +13,7 @@ interface GigCardProps {
 }
 
 const GigCard = async ({ gig }: GigCardProps) => {
+
   const userData = await getUserDoc(gig.userId);
   const username = userData?.username || "Unknown User";
 

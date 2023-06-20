@@ -2,6 +2,7 @@ import { CSSProperties, ReactNode } from "react";
 import { HTMLAttributes } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import clsx from "clsx";
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   children: ReactNode;
@@ -18,14 +19,17 @@ const imageStyle: CSSProperties = {
 
 export const Card = ({
   children,
-  className = "",
+  className,
   imgSrc = "",
   imgAlt = "",
   imgUrl = "",
   ...props
 }: CardProps) => {
   return (
-    <div className="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div
+      {...props}
+      className={clsx('w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700', className)}
+    >
       {imgSrc ? (
         imgUrl ? (
           <Link href={imgUrl} className="h-52 overflow-hidden relative flex">

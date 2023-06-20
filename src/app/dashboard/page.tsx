@@ -1,6 +1,7 @@
-"use client";
 import { Button } from "@/components/Button";
 import { useAuth, useAuthActions } from "@/context/Auth";
+import { auth } from "@/firebase";
+import { getUserDoc } from "@/firebase/utils";
 import { useGetUserDoc } from "@/hooks/useGetUser";
 import Link from "next/link";
 

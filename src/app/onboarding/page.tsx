@@ -1,23 +1,24 @@
 "use client";
 import MultistepForm from "@/components/Form/Multistep";
 import { StrictMode, useState } from "react";
-import BasicInfoForm from "./BasicInfoForm";
+import PersonalInfoForm from "./steps/PersonalInfoForm";
 import "./style.css";
 import PartialFormContainer from "@/components/Form/PartialFormContainer";
+import RolesForm from "./steps/RolesForm";
 
-const formSteps = [<BasicInfoForm key={0} />, <BasicInfoForm key={1} />];
+const formSteps = [<RolesForm key={0} />, <PersonalInfoForm key={1} />];
 
 export default function Onboarding() {
   return (
-    <StrictMode>
+    <div className="">
       <MultistepForm
         steps={formSteps}
         onCompleted={console.log}
-        className="mt-3"
+        className="mt-3 w-full"
         initData={{ name: "John Doe", email: "", password: "" }}
       >
-        <PartialFormContainer className="max-w-xl lg:max-w-xl" />
+        <PartialFormContainer />
       </MultistepForm>
-    </StrictMode>
+    </div>
   );
 }

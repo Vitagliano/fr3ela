@@ -2,8 +2,6 @@ import PrivateRoute from "@/components/PrivateRoute";
 import { PWC } from "@/types/components";
 import Image from "next/image";
 import Link from "next/link";
-import WelcomeImage from "./WelcomeImage";
-import WelcomeMessage from "./WelcomeMessage";
 
 export const metadata = {
   title: "Onboard",
@@ -11,26 +9,7 @@ export const metadata = {
 };
 
 function OnboardingLayout({ children }: PWC) {
-  return (
-    <PrivateRoute>
-      <section>
-        <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-          <WelcomeImage />
-
-          <main
-            aria-label="Main"
-            className="flex items-center justify-center px-8 py-8 sm:px-12 lg:block lg:col-span-8 lg:px-16 lg:py-12 xl:col-span-8"
-          >
-            <div className="max-x-xl md:max-x-3xl h-full">
-              <WelcomeMessage />
-
-              {children}
-            </div>
-          </main>
-        </div>
-      </section>
-    </PrivateRoute>
-  );
+  return <PrivateRoute>{children}</PrivateRoute>;
 }
 
 export default OnboardingLayout;

@@ -6,26 +6,10 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { UserDoc } from "@/types/user";
 import ClientJazzicon from "../icons/ClientJazzicon";
+import { getUserDoc } from "@/firebase/utils";
 
 interface GigCardProps {
   gig: GigDoc;
-}
-
-async function getUserDoc(id: string) {
-  try {
-    const docRef = doc(db, "users", id);
-    const docSnap = await getDoc(docRef);
-
-    if (!docSnap.exists()) {
-      console.log("No such document!");
-      return null;
-    }
-
-    return docSnap.data() as UserDoc;
-  } catch (error) {
-    console.log("Error getting document:", error);
-    return null;
-  }
 }
 
 const GigCard = async ({ gig }: GigCardProps) => {

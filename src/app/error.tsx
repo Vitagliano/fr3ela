@@ -3,10 +3,10 @@
 import { NextErrorProps } from "@/types/components";
 
 export default function Error({ error, reset }: NextErrorProps) {
-  console.log(error);
+  console.log({ error });
 
   return (
-    <div>
+    <div className="h-full w-full">
       <h1>ERROR</h1>
       <h2>{error.message}</h2>
       <button onClick={reset}>Reset</button>

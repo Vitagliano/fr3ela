@@ -1,7 +1,7 @@
 "use client";
 import { initialState, reducer } from "@/context/Auth/state";
 import type { Action, ActionsState, State } from "@/context/Auth/types";
-import { auth, db, moralisAuth } from "@/firebase";
+import { auth } from "@/firebase";
 import { googleProvider } from "@/firebase/providers";
 import {
   checkUserDocExists,
@@ -13,12 +13,12 @@ import {
 } from "@/util/user";
 import { User, UserCredential, signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { type Dispatch, useMemo, useReducer } from "react";
+import { useMemo, useReducer, type Dispatch } from "react";
 
-import { useAccount } from "wagmi";
+import { userQuery } from "@/firebase/queries";
 import { getNetwork } from "@wagmi/core";
-import { useWebSocketPublicClient } from "wagmi";
-import { doc, getDoc } from "firebase/firestore";
+import { getDoc, getDocs, query, where } from "firebase/firestore";
+import { useAccount, useWebSocketPublicClient } from "wagmi";
 
 export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
   const { chain } = getNetwork();
@@ -29,8 +29,6 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
   useAccount({
     async onConnect({ address, connector, isReconnected }) {
       try {
-        console.log('hello world', { isReconnected });
-
         if (!isReconnected) {
           const { user }: UserCredential = await signInWithWallet(
             webSocketProvider
@@ -40,21 +38,21 @@ export function useAuthState(): [State, ActionsState, Dispatch<Action>] {
 
           if (!userExists) {
             const isUserCreated = await createEmptyUserDoc(user);
-  
+
             if (!isUserCreated)
               return dispatch({
                 type: "REGISTER_ERROR",
                 payload: Error("Failed to create user document.")
               });
-  
+
             dispatch({ type: "REGISTER_SUCCESS", payload: user });
           }
         } else {
-          const docRef = doc(db, "users", address as string);
-          const docSnap = await getDoc(docRef);
-          const user = docSnap.data() as User | undefined;
+          const docRef = query(userQuery, where("wallet", "==", address));
+          const docSnap = await getDocs(docRef);
+          const user = docSnap.docs[0]?.data() as User | undefined;
 
-          if (!user) 
+          if (!user)
             return dispatch({
               type: "LOGIN_ERROR",
               payload: Error("Failed to login.")

@@ -1,10 +1,10 @@
 "use client";
 import MultistepForm from "@/components/Form/Multistep";
 import { StrictMode, useState } from "react";
-import PersonalInfoForm from "./steps/PersonalInfoForm";
+import PersonalInfoForm from "../../components/Onboarding/PersonalInfoForm";
 import "./style.css";
 import PartialFormContainer from "@/components/Form/PartialFormContainer";
-import RolesForm from "./steps/RolesForm";
+import RolesForm from "../../components/Onboarding/RolesForm";
 
 const formSteps = [<RolesForm key={0} />, <PersonalInfoForm key={1} />];
 

@@ -52,25 +52,36 @@ const wagmiConfig = createConfig({
   webSocketPublicClient
 });
 
+type GetMessageBodyProps = { message: { prepareMessage: () => string } };
+type CreateMessageProps = {
+  nonce: string;
+  address: string;
+  chainId: number;
+};
+
 const authenticationAdapter = createAuthenticationAdapter({
   getNonce: async () => {
     const response = await fetch("/api/nonce");
     return await response.text();
   },
 
-  createMessage: ({ nonce, address, chainId }) => {
-    // return new SiweMessage({
-    //   domain: window.location.host,
-    //   address,
-    //   statement: "Sign in with Ethereum to the app.",
-    //   uri: window.location.origin,
-    //   version: "1",
-    //   chainId,
-    //   nonce
-    // });
+  createMessage: ({ nonce, address, chainId }: CreateMessageProps) => {
+    return {
+      prepareMessage() {
+        return JSON.stringify({
+          domain: window.location.host,
+          address,
+          statement: "Sign in with Ethereum to the app.",
+          uri: window.location.origin,
+          version: "1",
+          chainId,
+          nonce
+        });
+      }
+    };
   },
 
-  getMessageBody: ({ message }) => {
+  getMessageBody: ({ message }: GetMessageBodyProps) => {
     return message.prepareMessage();
   },
 

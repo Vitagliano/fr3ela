@@ -1,4 +1,3 @@
-import Header from "@/components/Header/Header";
 import PrivateRoute from "@/components/PrivateRoute";
 import { PWC } from "@/types/components";
 
@@ -9,7 +8,7 @@ export const metadata = {
 
 const DashboardLayout = ({ children }: PWC) => (
   <PrivateRoute>
-    {children}
+    <div className="px-4 lg:px-8 max-w-screen-xl mx-auto py-12">{children}</div>
   </PrivateRoute>
 );
 

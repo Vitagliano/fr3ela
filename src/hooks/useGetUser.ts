@@ -3,6 +3,7 @@ import type { UserDoc } from "@/types/user";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
+import { getUserDoc } from "@/firebase/utils";
 
 export const useGetUserDoc = (uid: string | undefined) => {
   const [userDoc, setUserDoc] = useState<UserDoc | null>(null);
@@ -10,24 +11,11 @@ export const useGetUserDoc = (uid: string | undefined) => {
   useEffect(() => {
     if (!uid) return;
 
-    getUserDoc(uid);
-
-    // função copiada para o server component GigCard.tsx
-    async function getUserDoc(id: string) {
-      try {
-        const docRef = doc(db, "users", id);
-        const docSnap = await getDoc(docRef);
-
-        if (!docSnap.exists()) {
-          console.log("No such document!");
-          return;
-        }
-
-        setUserDoc(docSnap.data() as UserDoc);
-      } catch (error) {
-        console.log("Error getting document:", error);
-      }
-    }
+    getUserDoc(uid).then(userDoc => {
+      if (!userDoc) return;
+      
+      setUserDoc(userDoc);
+    });
   }, [uid]);
 
   return userDoc;

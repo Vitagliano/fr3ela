@@ -1,6 +1,19 @@
 import { UserDoc } from "@/types/user";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  QueryCompositeFilterConstraint,
+  QueryFieldFilterConstraint,
+  and,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  or,
+  query,
+  where
+} from "firebase/firestore";
 import { db } from ".";
+import { categoryQuery } from "./queries";
+import { CategoryDoc } from "@/types/category";
 
 export async function getUserDoc(id: string) {
   try {
@@ -8,13 +21,62 @@ export async function getUserDoc(id: string) {
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
-      console.log("No such document!");
+      console.warn("No such `user` document! id: ", id);
       return null;
     }
 
     return docSnap.data() as UserDoc;
   } catch (error) {
-    console.log("Error getting document:", error);
+    console.error("Error getting `user` document:", error);
     return null;
   }
+}
+
+export type CategoriesQueryShow = "all" | "main" | "sub" | "ignore-sub";
+
+export type CategoriesQueryFilter = {
+  name?: string;
+  show?: CategoriesQueryShow;
+};
+
+export async function getCategories(filter: CategoriesQueryFilter) {
+  const name = filter.name?.trim().toLowerCase();
+  const show = filter.show;
+  const categories: CategoryDoc[] = [];
+
+  try {
+    const queryRef = query(categoryQuery);
+
+    const querySnapshot = await getDocs(queryRef);
+    const docs = querySnapshot.docs.map(
+      doc => ({ ...doc.data(), id: doc.id } as CategoryDoc)
+    );
+
+    if (!name) return docs;
+
+    for (const doc of docs) {
+      const cat = doc;
+
+      const nameMatch = cat.name.toLowerCase().includes(name);
+
+      if (show !== "ignore-sub")
+        cat.subCategories =
+          show !== "main"
+            ? cat.subCategories.filter(sub =>
+                sub.name.toLowerCase().includes(name)
+              )
+            : [];
+
+      if (
+        (show !== "sub" && nameMatch) ||
+        (show !== "ignore-sub" && cat.subCategories.length > 0)
+      ) {
+        categories.push(cat);
+      }
+    }
+  } catch (error) {
+    console.error("Error getting `category` document:", error);
+  }
+
+  return categories;
 }

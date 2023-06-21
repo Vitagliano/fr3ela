@@ -32,9 +32,11 @@ export async function getUserDoc(id: string) {
   }
 }
 
+export type CategoriesQueryShow = "all" | "main" | "sub" | "ignore-sub";
+
 export type CategoriesQueryFilter = {
   name?: string;
-  show?: "all" | "main" | "sub";
+  show?: CategoriesQueryShow;
 };
 
 export async function getCategories(filter: CategoriesQueryFilter) {
@@ -57,14 +59,18 @@ export async function getCategories(filter: CategoriesQueryFilter) {
 
       const nameMatch = cat.name.toLowerCase().includes(name);
 
-      cat.subCategories =
-        show !== "main"
-          ? cat.subCategories.filter(sub =>
-              sub.name.toLowerCase().includes(name)
-            )
-          : [];
+      if (show !== "ignore-sub")
+        cat.subCategories =
+          show !== "main"
+            ? cat.subCategories.filter(sub =>
+                sub.name.toLowerCase().includes(name)
+              )
+            : [];
 
-      if ((show !== "sub" && nameMatch) || cat.subCategories.length > 0) {
+      if (
+        (show !== "sub" && nameMatch) ||
+        (show !== "ignore-sub" && cat.subCategories.length > 0)
+      ) {
         categories.push(cat);
       }
     }

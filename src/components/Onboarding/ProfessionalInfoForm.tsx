@@ -5,7 +5,7 @@ import Input from "@/components/Input";
 import { useMultistepForm } from "@/context/Form";
 import Link from "next/link";
 
-function PersonalInfoForm() {
+function ProfessionalInfoForm() {
   const { next, prev, step } = useMultistepForm<{ name: string }>();
 
   return (
@@ -88,4 +88,4 @@ function PersonalInfoForm() {
   );
 }
 
-export default PersonalInfoForm;
+export default ProfessionalInfoForm;

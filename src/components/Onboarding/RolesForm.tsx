@@ -4,7 +4,7 @@ import { Card } from "@/components/Card";
 import { useMultistepForm } from "@/context/Form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { useMemo } from "react";

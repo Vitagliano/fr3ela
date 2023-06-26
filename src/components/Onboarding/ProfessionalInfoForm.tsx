@@ -5,34 +5,8 @@ import Input from "@/components/Input";
 import { useMultistepForm } from "@/context/Form";
 import Link from "next/link";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-
-import { useMemo } from "react";
-
-const schema = z.object({
-  avatar: z.string().url({ message: "Please enter a valid URL." }),
-  firstName: z.string().min(2, { message: "Please enter a valid name." }),
-  lastName: z.string().min(2, { message: "Please enter a valid name." }),
-  description: z
-    .string()
-    .min(2, { message: "Please enter a valid description." }),
-  timezone: z.string().min(2, { message: "Please enter a valid timezone." })
-});
-
-type PersonalInfoSchema = z.infer<typeof schema>;
-
-const resolver = zodResolver(schema);
-
-function PersonalInfoForm() {
+function ProfessionalInfoForm() {
   const { next, prev, step } = useMultistepForm<{ name: string }>();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting }
-  } = useForm<PersonalInfoSchema>({ resolver });
-  // const onSubmit = useMemo(() => (data: RoleSchema) => next(data), [next]);
 
   return (
     <Card className="w-full max-w-xl mx-auto">
@@ -65,30 +39,19 @@ function PersonalInfoForm() {
                 or drag your file here
               </p>
             </label>
-            <Input
-              {...register("avatar", { required: true })}
-              id="file"
-              type="file"
-              className="hidden"
-            />
+            <Input id="file" type="file" className="hidden" />
           </div>
         </div>
 
         <div className="flex flex-row gap-3 w-full items-end">
           <Input
             label="Full name"
-            {...register("firstName", { required: true })}
             type="text"
             placeholder="First name"
             required
           />
 
-          <Input
-            type="text"
-            {...register("lastName", { required: true })}
-            required
-            placeholder="Last name"
-          />
+          <Input type="text" required placeholder="Last name" />
         </div>
         <Input className="w-full" type="text" label="Username" required />
         <div className="flex flex-col gap-2">
@@ -96,21 +59,12 @@ function PersonalInfoForm() {
             Tell us about you
           </label>
           <textarea
-            {...register("description", { required: true })}
             className="text-gray-500 bg-transparent outline-none border focus:border-blue-600 w-full px-3 py-2 rounded-lg"
             rows={5}
             id="description"
             required
           />
         </div>
-        <Input
-          {...register("timezone", { required: true })}
-          className="w-full"
-          type="text"
-          label="Timezone"
-          required
-        />
-
         <div className="flex justify-between w-full">
           {step !== 0 ? (
             <Button
@@ -134,4 +88,4 @@ function PersonalInfoForm() {
   );
 }
 
-export default PersonalInfoForm;
+export default ProfessionalInfoForm;

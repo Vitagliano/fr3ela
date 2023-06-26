@@ -1,7 +1,11 @@
 "use client";
 import "@rainbow-me/rainbowkit/styles.css";
 
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import {
+  RainbowKitProvider,
+  getDefaultWallets,
+  connectorsForWallets
+} from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import {
   arbitrum,
@@ -39,11 +43,15 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [publicProvider()]
 );
 
-const { connectors } = getDefaultWallets({
+const projectId = String(process.env.NEXT_PUBLIC_WALLET_CONNECT_CLOUD);
+
+const { wallets } = getDefaultWallets({
   appName: "FR3ELA",
-  projectId: "FR3ELA",
+  projectId,
   chains
 });
+
+const connectors = connectorsForWallets([...wallets]);
 
 const wagmiConfig = createConfig({
   autoConnect: true,

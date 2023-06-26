@@ -11,11 +11,10 @@ const ThemeEventSwitcher = ({ children }: PWC) => {
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   useEffect(() => {
-    const listener = (e: KeyboardEvent) => {
-      console.log(e);
-      if (e.ctrlKey && e.code === "KeyQ")
-        setTheme(currentTheme === "dark" ? "light" : "dark");
-    };
+    const listener = (e: KeyboardEvent) =>
+      e.ctrlKey &&
+      e.code === "KeyQ" &&
+      setTheme(currentTheme === "dark" ? "light" : "dark");
 
     document.addEventListener("keypress", listener);
 

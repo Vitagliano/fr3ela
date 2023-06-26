@@ -1,3 +1,4 @@
+'use client';
 import { createContext, useContext, useReducer } from "react";
 import { initialState, reducer } from "./state";
 import { MSFCtx, MSFProviderProps, State } from "./types";

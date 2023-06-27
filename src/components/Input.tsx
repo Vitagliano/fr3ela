@@ -30,6 +30,7 @@ const labelStyle = "block text-sm font-medium";
 const RegularInput = forwardRef<HTMLInputElement, InputProps>(
   ({ className = "", sizing = "base", label, ...props }, ref) => (
     <input
+      {...props}
       ref={ref}
       className={clsx(
         inputStyle,
@@ -37,7 +38,6 @@ const RegularInput = forwardRef<HTMLInputElement, InputProps>(
         label ? "mt-1" : "",
         className
       )}
-      {...props}
     />
   )
 );
@@ -47,7 +47,6 @@ RegularInput.displayName = "RegularInput";
 const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
   ({ className = "", sizing = "base", label, ...props }, ref) => {
     const [isPasswordHidden, setPasswordHidden] = useState(true);
-
     return (
       <div className={clsx("relative", label ? "mt-1" : "")}>
         <input
@@ -79,11 +78,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ type, ...props }, ref) => {
     const input =
       type !== "password" ? (
-        // @ts-expect-error TODO FIX TYPE LATER
-        <RegularInput ref={ref} type={type} {...props} />
+        <RegularInput {...props} ref={ref} type={type} />
       ) : (
-        // @ts-expect-error TODO FIX TYPE LATER
-        <PasswordInput ref={ref} {...props} />
+        <PasswordInput {...props} ref={ref} />
       );
 
     const label = props.label ? (
@@ -104,3 +101,4 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = "Input";
 
 export default Input;
+export { type InputProps };

@@ -1,10 +1,5 @@
 import clsx from "clsx";
-import {
-  FC,
-  ForwardRefExoticComponent,
-  HTMLAttributes,
-  forwardRef
-} from "react";
+import { HTMLAttributes, forwardRef } from "react";
 
 interface FormProps extends HTMLAttributes<HTMLFormElement> {}
 

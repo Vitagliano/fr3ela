@@ -1,9 +1,10 @@
-'use client';
+"use client";
 import { createContext, useContext, useReducer } from "react";
 import { initialState, reducer } from "./state";
 import { MSFCtx, MSFProviderProps, State } from "./types";
 
 const MSFormContext = createContext(initialState);
+MSFormContext.displayName = "MultistepFormContext";
 const MSFormCtxProvider = MSFormContext.Provider;
 function MSFProvider<T>(props: MSFProviderProps<T>) {
   const { children, onCompleted, init } = props;

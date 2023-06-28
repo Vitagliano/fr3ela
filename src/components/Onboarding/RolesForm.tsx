@@ -3,11 +3,10 @@ import { Button } from "@/components/Button";
 import { useMultistepForm } from "@/context/Form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import clsx from "clsx";
-import Field from "../Form/Field";
+import { createForm } from "../Form";
 
 const Roles = [
   {
@@ -22,49 +21,31 @@ const Roles = [
 
 const schema = z.object({
   roles: z
-    .string({ invalid_type_error: "Please select a role." })
+    .string({ required_error: "Please select a role." })
     .refine(val => Roles.map(role => role.name).includes(val))
 });
 
 type RoleSchema = z.infer<typeof schema>;
 
-const resolver = zodResolver(schema);
+const { Form, Field, ErrorMessage } = createForm<RoleSchema>({
+  resolver: zodResolver(schema)
+});
 
 function RolesForm() {
   const { next } = useMultistepForm<RoleSchema>();
-  const {
-    handleSubmit,
-    control,
-    watch,
-    formState: { errors, isSubmitting }
-  } = useForm<RoleSchema>({ resolver });
-
-  const role = watch("roles");
-
-  const onSubmit = (data: RoleSchema) => next(data);
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
+    <Form
+      onSubmit={next}
       className="flex flex-col gap-6 card mx-auto max-w-xl w-full"
     >
       {Roles.map((item, idx) => (
         <label
           key={idx}
           htmlFor={item.name}
-          className={clsx(
-            "flex gap-6 ring-blue-600 duration-200 relative w-full p-5 cursor-pointer rounded-lg border bg-white shadow-sm",
-            item.name === role && "ring-2"
-          )}
+          className="flex gap-6 ring-blue-600 duration-200 relative w-full p-5 cursor-pointer rounded-lg border bg-white shadow-sm"
         >
-          <Field
-            name="roles"
-            type="radio"
-            control={control}
-            value={item.name}
-            id={item.name}
-            disabled={isSubmitting}
-          />
+          <Field id={item.name} name="roles" type="radio" value={item.name} />
           <div>
             <h3 className="leading-none text-gray-800 font-medium capitalize">
               {item.name}
@@ -73,7 +54,7 @@ function RolesForm() {
           </div>
         </label>
       ))}
-      {errors.roles?.message ? <p>{errors.roles?.message}</p> : null}
+      <ErrorMessage name="roles" />
       <Button
         type="submit"
         variant="hover-outline"
@@ -81,7 +62,7 @@ function RolesForm() {
       >
         Next
       </Button>
-    </form>
+    </Form>
   );
 }
 

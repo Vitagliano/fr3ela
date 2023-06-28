@@ -1069,6 +1069,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/error-message@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@hookform/error-message@npm:2.0.1"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+    react-hook-form: ^7.0.0
+  checksum: eb3c33ab3fd2fe02b9bb1686f3d1ef2504ee2bb4e8e848797e2c68d957e53b1150f5f13946c65e386ed3b6e95e3b3fba29480bab1e0f60c4972e225248c8c68e
+  languageName: node
+  linkType: hard
+
 "@hookform/resolvers@npm:^3.1.0":
   version: 3.1.1
   resolution: "@hookform/resolvers@npm:3.1.1"
@@ -4975,6 +4986,7 @@ __metadata:
   resolution: "fr3ela@workspace:."
   dependencies:
     "@heroicons/react": ^2.0.17
+    "@hookform/error-message": ^2.0.1
     "@hookform/resolvers": ^3.1.0
     "@moralisweb3/client-firebase-auth-utils": ^2.21.0
     "@moralisweb3/client-firebase-evm-auth": ^2.21.0

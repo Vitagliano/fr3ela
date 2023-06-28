@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
+    "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.1.0",
     "@moralisweb3/client-firebase-auth-utils": "^2.21.0",
     "@moralisweb3/client-firebase-evm-auth": "^2.21.0",

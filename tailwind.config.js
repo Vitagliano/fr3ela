@@ -13,10 +13,10 @@ module.exports = {
     extend: {
       colors: {
         card: {
-          light: "#eaeaea",
-          DEFAULT: colors.zinc[500],
-          dark: colors.zinc[700],
-          darker: colors.zinc[800]
+          light: colors.white,
+          DEFAULT: colors.gray[500],
+          dark: colors.gray[800],
+          darker: colors.gray[900]
         }
       }
     }

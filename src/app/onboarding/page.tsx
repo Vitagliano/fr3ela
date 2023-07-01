@@ -15,15 +15,13 @@ const formSteps = [
 
 export default function Onboarding() {
   return (
-    <div className="">
-      <MultistepForm
-        steps={formSteps}
-        onCompleted={console.log}
-        className="mt-3 mb-12 w-full"
-        initData={{ name: "John Doe", email: "", password: "" }}
-      >
-        <PartialFormContainer />
-      </MultistepForm>
-    </div>
+    <MultistepForm
+      steps={formSteps}
+      onCompleted={console.log}
+      className="mt-3 w-full"
+      initData={{ name: "John Doe", email: "", password: "" }}
+    >
+      <PartialFormContainer />
+    </MultistepForm>
   );
 }

@@ -1,7 +1,7 @@
+"use client";
 import { useFormSteps, useMultistepForm } from "@/context/Form";
 import clsx from "clsx";
 import { DetailedHTMLProps, HTMLAttributes, useMemo } from "react";
-import "./PartialFormStyles.css";
 
 export type PartialFormContainerProps = Omit<
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
@@ -20,10 +20,9 @@ function PartialFormContainer(props: PartialFormContainerProps) {
           key={i}
           id={`form-step-${i}`}
           className={clsx(
-            "w-full transition-all block duration-700 ease-in-out md:absolute",
-            step === i && "active delay-200 ",
-            step < i && "right",
-            step > i && "left"
+            "w-full md:absolute",
+            step === i && "block",
+            step !== i && "hidden"
           )}
         >
           {el}

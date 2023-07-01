@@ -18,7 +18,7 @@
 
 @layer components {
   .card {
-    @apply dark:bg-card-dark bg-card-light p-5 rounded-lg shadow-lg;
+    @apply dark:bg-card-dark bg-card-light p-5 rounded-lg shadow-lg border border-gray-200 w-full;
   }
 
   .card-darker {

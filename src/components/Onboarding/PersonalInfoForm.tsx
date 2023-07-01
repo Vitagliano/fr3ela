@@ -11,8 +11,24 @@ import * as z from "zod";
 
 import { useMemo } from "react";
 
+// use number separators for readability
+const MAX_FILE_SIZE = 5_000_000;
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp"
+];
+
 const schema = z.object({
-  avatar: z.string().url({ message: "Please enter a valid URL." }),
+  avatar: z
+    .any()
+    .refine(files => files?.length === 1, "Image is required.")
+    .refine(files => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
+    .refine(
+      files => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+      ".jpg, .jpeg, .png and .webp files are accepted."
+    ),
   firstName: z.string().min(2, { message: "Please enter a valid name." }),
   lastName: z.string().min(2, { message: "Please enter a valid name." }),
   description: z
@@ -26,17 +42,21 @@ type PersonalInfoSchema = z.infer<typeof schema>;
 const resolver = zodResolver(schema);
 
 function PersonalInfoForm() {
-  const { next, prev, step } = useMultistepForm<{ name: string }>();
+  const { next, prev, step } = useMultistepForm<PersonalInfoSchema>();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm<PersonalInfoSchema>({ resolver });
-  // const onSubmit = useMemo(() => (data: RoleSchema) => next(data), [next]);
+
+  const onSubmit = useMemo(
+    () => (data: PersonalInfoSchema) => next(data),
+    [next]
+  );
 
   return (
     <Card className="w-full max-w-xl mx-auto">
-      <form className="flex flex-col gap-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <div className="flex w-full justify-center items-center">
           <div className="w-40 h-40 rounded-full border-2 border-dashed flex items-center justify-center">
             <label
@@ -66,12 +86,16 @@ function PersonalInfoForm() {
               </p>
             </label>
             <Input
-              {...register("avatar", { required: true })}
+              {...register("avatar", { required: false })}
               id="file"
               type="file"
               className="hidden"
+              disabled={isSubmitting}
             />
           </div>
+          {errors.avatar?.message ? (
+            <p>{errors.avatar?.message as string}</p>
+          ) : null}
         </div>
 
         <div className="flex flex-row gap-3 w-full items-end">
@@ -81,6 +105,7 @@ function PersonalInfoForm() {
             type="text"
             placeholder="First name"
             required
+            disabled={isSubmitting}
           />
 
           <Input
@@ -88,7 +113,12 @@ function PersonalInfoForm() {
             {...register("lastName", { required: true })}
             required
             placeholder="Last name"
+            disabled={isSubmitting}
           />
+          {errors.firstName?.message ? (
+            <p>{errors.firstName?.message}</p>
+          ) : null}
+          {errors.lastName?.message ? <p>{errors.lastName?.message}</p> : null}
         </div>
         <Input className="w-full" type="text" label="Username" required />
         <div className="flex flex-col gap-2">
@@ -99,9 +129,13 @@ function PersonalInfoForm() {
             {...register("description", { required: true })}
             className="text-gray-500 bg-transparent outline-none border focus:border-blue-600 w-full px-3 py-2 rounded-lg"
             rows={5}
+            disabled={isSubmitting}
             id="description"
             required
           />
+          {errors.description?.message ? (
+            <p>{errors.description?.message}</p>
+          ) : null}
         </div>
         <Input
           {...register("timezone", { required: true })}
@@ -109,6 +143,7 @@ function PersonalInfoForm() {
           type="text"
           label="Timezone"
           required
+          disabled={isSubmitting}
         />
 
         <div className="flex justify-between w-full">
@@ -122,7 +157,7 @@ function PersonalInfoForm() {
             </Button>
           ) : null}
           <Button
-            onClick={() => next({ name: "John Doe" })}
+            type="submit"
             variant="hover-outline"
             className="inline-block shrink-0 rounded-md text-sm font-medium text-white transitiom"
           >

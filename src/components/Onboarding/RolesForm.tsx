@@ -4,11 +4,13 @@ import { Card } from "@/components/Card";
 import { useMultistepForm } from "@/context/Form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { useMemo } from "react";
 import Input from "@/components/Input";
+
+import { UserRoles } from "@/types/user";
 
 const Roles = [
   {
@@ -32,13 +34,13 @@ type RoleSchema = z.infer<typeof schema>;
 const resolver = zodResolver(schema);
 
 function RolesForm() {
-  const { next, prev, step } = useMultistepForm<{ roles: string }>();
+  const { next, prev, step } = useMultistepForm<UserRoles>();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting }
-  } = useForm<RoleSchema>({ resolver });
-  const onSubmit = useMemo(() => (data: RoleSchema) => next(data), [next]);
+  } = useForm<UserRoles>({ resolver });
+  const onSubmit = useMemo(() => (data: UserRoles) => next(data), [next]);
 
   return (
     <Card className="w-full max-w-xl mx-auto">

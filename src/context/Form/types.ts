@@ -24,9 +24,9 @@ export type MSFCtx<T = unknown> = State<T> & {
   __complete(data: T): void;
 
   prev(): void;
-  next(data: Partial<T>): void;
-  jump(step: number, data?: Partial<T>): void;
-  submit(data: Partial<T>): void;
+  next(data: T): void;
+  jump(step: number, data?: T): void;
+  submit(data: T): void;
 };
 
 export type Actions = Dict<Action["type"], Func<MSFCtx>>;

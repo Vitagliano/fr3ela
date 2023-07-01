@@ -1,22 +1,79 @@
+"use client";
 import clsx from "clsx";
-import {
-  FC,
-  ForwardRefExoticComponent,
-  HTMLAttributes,
-  forwardRef
-} from "react";
+import { ForwardedRef, HTMLAttributes, forwardRef, memo } from "react";
+import { FieldValues, UseFormProps } from "react-hook-form";
+import FormProvider from "./FormProvider";
 
-interface FormProps extends HTMLAttributes<HTMLFormElement> {}
+type FormAttributes = HTMLAttributes<HTMLFormElement>;
 
-const defaultStyles =
-  "mt-8 lg:mt-0 grid grid-cols-6 gap-5 w-full lg:gap-6 text-gray-700 dark:text-inherit";
+type FormProps<F extends FieldValues = FieldValues> = (
+  | {
+      disableContext: true;
+      onSubmit?: FormAttributes["onSubmit"];
+    }
+  | {
+      disableContext?: false;
+      onSubmit?: (data: F) => void;
+    }
+) &
+  Omit<FormAttributes, "onSubmit"> &
+  UseFormProps<F>;
 
-const Form = forwardRef<HTMLFormElement, FormProps>(
-  ({ className, ...props }, ref) => (
-    <form ref={ref} {...props} className={clsx(defaultStyles, className)} />
-  )
-);
+function Form<F extends FieldValues = FieldValues>(
+  props: FormProps<F>,
+  ref: ForwardedRef<HTMLFormElement>
+) {
+  const {
+    disableContext,
+    mode,
+    reValidateMode,
+    defaultValues,
+    values,
+    resetOptions,
+    resolver,
+    context,
+    shouldFocusError,
+    shouldUnregister,
+    shouldUseNativeValidation,
+    progressive,
+    criteriaMode,
+    delayError,
+    onSubmit,
+    ...formProps
+  } = props;
 
-Form.displayName = "Form";
+  const options = {
+    mode,
+    reValidateMode,
+    defaultValues,
+    values,
+    resetOptions,
+    resolver,
+    context,
+    shouldFocusError,
+    shouldUnregister,
+    shouldUseNativeValidation,
+    progressive,
+    criteriaMode,
+    delayError
+  };
 
-export default Form;
+  if (disableContext)
+    return <form ref={ref} {...formProps} onSubmit={onSubmit} />;
+
+  return (
+    <FormProvider<F> {...options}>
+      {({ handleSubmit }) => (
+        <form
+          ref={ref}
+          {...formProps}
+          onSubmit={onSubmit ? handleSubmit(onSubmit) : undefined}
+        />
+      )}
+    </FormProvider>
+  );
+}
+
+const _Form = memo(forwardRef<HTMLFormElement, FormProps>(Form)) as typeof Form;
+export default _Form;
+export type { FormProps };
